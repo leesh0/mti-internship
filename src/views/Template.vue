@@ -4,15 +4,8 @@
   </div>
 </template>
 <script>
-// 必要なものはここでインポートする
-// @は/srcと同じ意味です
-// import something from '@/components/something.vue';
-
 export default {
   name: 'Template',
-  components: {
-   // 読み込んだコンポーネント名をここに記述する
-  },
   data() {
   // Vue.jsで使う変数はここに記述する
     return {
