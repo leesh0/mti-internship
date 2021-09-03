@@ -6,20 +6,13 @@
       <div class="ui segment">
         <form class="ui form">
           <div class="field">
-            <label>ユーザ名</label>
-            <input type="text" placeholder="Nickname" v-model="nickname" />
+            <label>食べ物</label>
+            <input type="text" placeholder="食べ物" v-model="nickname" />
           </div>
           <div class="field">
-            <label>年齢</label>
+            <label>食べた量</label>
             <div class="inline fields">
-              <div class="field">
-                <input type="number" v-model="start" />
-                <label>歳から</label>
-              </div>
-              <div class="field">
-                <input type="number" v-model="end" />
-                <label>歳まで</label>
-              </div>
+                <input type="number" placeholder="g">
             </div>
           </div>
         </form>
