@@ -167,7 +167,7 @@ export default {
         this.err = "体重を入力してください";
       } else if (!this.user.height) {
         this.err = "身長を入力してください";
-      } else if(!elements.item(0).checked && !elements.item(1).checked) {
+      } else if (!elements.item(0).checked && !elements.item(1).checked) {
         this.err = "性別を選択してください"
       } else {
         // APIにPOSTリクエストを送る
