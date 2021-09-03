@@ -4,36 +4,105 @@
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
-        <h3>テストユーザー さん</h3>
-        <table class="ui celled table">
-          <thead>
-            <tr>
-              <th>項目</th>
-              <th>現在の数値</th>
-              <th>目標数値まで</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td data-label="Name">体重</td>
-              <td data-label="Age">55Kg</td>
-              <td data-label="Job">-5Kg</td>
-            </tr>
-            <tr>
-              <td data-label="Name">身長</td>
-              <td data-label="Age">150Kg</td>
-              <td data-label="Job">+3cm</td>
-            </tr>
-            <tr>
-              <td data-label="Name">ウエスト</td>
-              <td data-label="Age">60cm</td>
-              <td data-label="Job">-5cm</td>
-            </tr>
-          </tbody>
-        </table>
+        <h2>テストユーザー さん</h2>
+        <!--  -->
+        <div class="ui grid">
+          <div class="ten wide column">
+            <table class="ui celled table">
+              <thead>
+                <tr>
+                  <th>項目</th>
+                  <th>現在の数値</th>
+                  <th>目標数値まで</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Name">体重</td>
+                  <td data-label="Age">55Kg</td>
+                  <td data-label="Job">-5Kg</td>
+                </tr>
+                <tr>
+                  <td data-label="Name">身長</td>
+                  <td data-label="Age">150Kg</td>
+                  <td data-label="Job">+3cm</td>
+                </tr>
+                <tr>
+                  <td data-label="Name">ウエスト</td>
+                  <td data-label="Age">60cm</td>
+                  <td data-label="Job">-5cm</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="six wide column">
+            <div class="ui teal message">
+              <h3>今日の目標摂取・消費カロリー</h3>
+              <h1>10Kcal 摂取</h1>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="ui segment">
         <BarChart />
+      </div>
+      <div class="ui segment">
+        <div class="ui grid">
+          <div class="eight wide column">
+            <h3>運動に関するアドバイス</h3>
+            <div class="ui comments">
+              <div class="comment">
+                <a class="avatar">
+                  <img
+                    src="https://semantic-ui.com/images/avatar/small/stevie.jpg"
+                  />
+                </a>
+                <div class="content">
+                  <a class="author">エクササイズアドバイザー</a>
+                  <div class="text">
+                    もう少し運動しましょう。以下の運動がおすすめです!!
+                    <ul>
+                      <li>
+                        <h3>ウォーキング</h3>
+                      </li>
+                      <li>
+                        <h3>スクワット</h3>
+                      </li>
+                    </ul>
+                    <a href="">もっと見る</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="eight wide column">
+            <h3>食事に関するアドバイス</h3>
+            <div class="ui comments">
+              <div class="comment">
+                <a class="avatar">
+                  <img
+                    src="https://semantic-ui.com/images/avatar/small/stevie.jpg"
+                  />
+                </a>
+                <div class="content">
+                  <a class="author">食のアドバイザー</a>
+                  <div class="text">
+                    脂質の摂取を控えましょう。以下の食事がおすすめです!!
+                    <ul>
+                      <li>
+                        <h3>サラダ</h3>
+                      </li>
+                      <li>
+                        <h3>うどん</h3>
+                      </li>
+                    </ul>
+                    <a href="">もっと見る</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -267,5 +336,8 @@ export default {
   color: red;
   font-size: 15px;
   margin-bottom: 10px;
+}
+.comment {
+  font-size: 120%;
 }
 </style>
