@@ -17,15 +17,29 @@
       <div class="ui segments">
         <template v-for="(data, index) in foodData">
           <div class="ui segment wrapper" :key="index">
-            <h2 class="ui header">
-              <div class="content">
-                {{ data.name }}
-                <div class="ui green label">カロリー：{{ data.kcal }} Kcal</div>
-                <div class="ui gray label">タンパク質：{{ data.p }} g</div>
-                <div class="ui gray label">炭水化物：{{ data.c }} g</div>
-                <div class="ui gray label">脂肪：{{ data.f }} g</div>
+            <div class="ui grid">
+              <div class="fourteen wide column">
+                <h2 class="ui header">
+                  <div class="content">
+                    {{ data.name }}
+                    <div class="ui green label">
+                      カロリー：{{ data.kcal }} Kcal
+                    </div>
+                    <div class="ui gray label">タンパク質：{{ data.p }} g</div>
+                    <div class="ui gray label">炭水化物：{{ data.c }} g</div>
+                    <div class="ui gray label">脂肪：{{ data.f }} g</div>
+                  </div>
+                </h2>
               </div>
-            </h2>
+              <div class="two wide column">
+                <button
+                  class="ui primary button"
+                  v-on:click="submit(data.name)"
+                >
+                  記録
+                </button>
+              </div>
+            </div>
           </div>
         </template>
       </div>
@@ -84,7 +98,14 @@ export default {
   },
   methods: {
     // Vue.jsで使う関数はここで記述する
+    submit(foodName) {
+      window.alert(foodName + "を記録");
+    },
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.savebtn {
+  margin-left: 30px;
+}
+</style>
