@@ -15,7 +15,7 @@
             <div class="ui left icon input">
               <i class="lock icon"></i>
               <input
-                type="password" placeholder="Password" v-model="user.password" />
+                type="password" placeholder="パスワード" v-model="user.password" />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
@@ -32,7 +32,7 @@
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
-               <!-- アイコンを追加 -->
+              <!-- アイコンを追加 -->
               <input type="text" placeholder="体重" v-model.number="user.weight" />
             </div>
           </div>
