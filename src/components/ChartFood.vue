@@ -4,6 +4,10 @@ export default {
   extends: Bar,
   data() {
     const labelsArray = [
+      "8/21",
+      "8/22",
+      "8/23",
+      "8/24",
       "8/25",
       "8/26",
       "8/27",
@@ -15,15 +19,36 @@ export default {
       "9/2",
       "9/3",
     ];
-    const dataArray = [40, 30, 50, 25, 70, 40, 30, 50, 25, 70];
+    const dataArrayP = [40, 30, 50, 25, 70, 40, 30, 50, 25, 70, 80, 20, 30, 50];
+    const dataArrayC = [20, 40, 30, 45, 20, 40, 35, 20, 35, 70, 85, 25, 40, 70];
+    const dataArrayF = [30, 50, 30, 55, 60, 20, 45, 10, 65, 20, 35, 75, 10, 30];
     return {
       chartdata: {
         labels: labelsArray,
         datasets: [
           {
-            label: ["摂取カロリー"],
+            label: ["タンパク質"],
             backgroundColor: "#f87979",
-            data: dataArray,
+            data: dataArrayP,
+            fill: false,
+            type: "line",
+            lineTension: 0,
+          },
+          {
+            label: ["炭水化物"],
+            backgroundColor: "#87ceeb",
+            data: dataArrayC,
+            fill: false,
+            type: "line",
+            lineTension: 0,
+          },
+          {
+            label: ["脂肪"],
+            backgroundColor: "#ffa500",
+            data: dataArrayF,
+            fill: false,
+            type: "line",
+            lineTension: 0,
           },
         ],
       },
@@ -47,7 +72,7 @@ export default {
               },
               scaleLabel: {
                 display: true,
-                labelString: "Kcal",
+                labelString: "グラム(g)",
               },
             },
           ],
