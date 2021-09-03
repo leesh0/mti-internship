@@ -1,5 +1,5 @@
 #!/bin/bash
-​
+​# new!
 # 名前のデータ取る
 name=$(cat yourname.env | sed s/YOURNAME=//)
 ​
