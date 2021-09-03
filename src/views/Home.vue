@@ -37,15 +37,15 @@
           </div>
           <div class="six wide column">
             <div class="ui teal message">
-              <h3>今日の目標摂取・消費カロリー</h3>
-              <h1 v-if="true">あと 10Kcal 摂取しましょう</h1>
-              <h1 v-else>あと 10Kcal 消費しましょう</h1>
+              <h4>今日の目標摂取・消費カロリー</h4>
+              <h1>10Kcal 摂取</h1>
             </div>
           </div>
         </div>
       </div>
       <div class="ui segment">
-        <BarChart />
+        <h2>直近２週間のデータ</h2>
+        <Chart />
       </div>
       <div class="ui segment">
         <div class="ui grid">
@@ -55,7 +55,7 @@
               <div class="comment">
                 <a class="avatar">
                   <img
-                    src="https://semantic-ui.com/images/avatar/small/elliot.jpg"
+                    src="https://semantic-ui.com/images/avatar/small/stevie.jpg"
                   />
                 </a>
                 <div class="content">
@@ -70,7 +70,11 @@
                         <h3>スクワット</h3>
                       </li>
                     </ul>
-                    <a href="">もっと見る</a>
+                    <a
+                      @click="switchPage('Exercise')"
+                      style="cursor: hand; cursor:pointer;"
+                      >もっと見る</a
+                    >
                   </div>
                 </div>
               </div>
@@ -97,7 +101,11 @@
                         <h3>うどん</h3>
                       </li>
                     </ul>
-                    <a href="">もっと見る</a>
+                    <a
+                      @click="switchPage('Food')"
+                      style="cursor: hand; cursor:pointer;"
+                      >もっと見る</a
+                    >
                   </div>
                 </div>
               </div>
@@ -117,7 +125,7 @@
 // import something from '@/components/something.vue';
 import { baseUrl } from "@/assets/config.js";
 import Menu from "@/components/Menu.vue";
-import BarChart from "@/components/BarChart.vue";
+import Chart from "@/components/Chart.vue";
 import axios from "axios";
 
 export default {
@@ -125,7 +133,7 @@ export default {
   components: {
     // 読み込んだコンポーネント名をここに記述する
     Menu,
-    BarChart,
+    Chart,
   },
   data() {
     // Vue.jsで使う変数はここに記述する
@@ -173,6 +181,10 @@ export default {
   },
   methods: {
     // Vue.jsで使う関数はここで記述する
+    switchPage(pageName) {
+      this.$router.push({ name: pageName });
+    },
+    //
     getArticles() {
       axios
         .get(baseUrl + "/posts")

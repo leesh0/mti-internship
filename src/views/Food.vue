@@ -4,6 +4,53 @@
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
+        <h2>カロリー摂取・消費状況</h2>
+        <ChartFoodCal />
+        <div class="ui message">
+          <div class="header">
+            アドバイス
+          </div>
+          <div class="ui comments">
+            <div class="comment">
+              <a class="avatar">
+                <img
+                  src="https://semantic-ui.com/images/avatar/small/stevie.jpg"
+                />
+              </a>
+              <div class="content">
+                <a class="author">アドバイザー</a>
+                <div class="text">
+                  カロリー摂取が安定していません。安定した食生活にしましょう。
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h2>栄養摂取状況</h2>
+        <ChartFood />
+        <div class="ui message">
+          <div class="header">
+            アドバイス
+          </div>
+          <div class="ui comments">
+            <div class="comment">
+              <a class="avatar">
+                <img
+                  src="https://semantic-ui.com/images/avatar/small/jenny.jpg"
+                />
+              </a>
+              <div class="content">
+                <a class="author">アドバイザー</a>
+                <div class="text">
+                  栄養が偏っています。バランスの良い食事を心がけましょう。
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui segment">
+        <h2>食事の記録</h2>
         <form class="ui form">
           <div class="field">
             <label>食べた料理名を入力してください。</label>
@@ -14,7 +61,12 @@
           </div>
         </form>
       </div>
-      <div class="ui segments">
+      <div v-show="foodData.length === 0" class="ui segments">
+        <div class="ui orange message">
+          入力された料理は登録されていません。
+        </div>
+      </div>
+      <div v-show="foodData.length !== 0" class="ui segments">
         <template v-for="(data, index) in foodData">
           <div class="ui segment wrapper" :key="index">
             <div class="ui grid">
@@ -48,6 +100,8 @@
 </template>
 <script>
 import Menu from "@/components/Menu.vue";
+import ChartFood from "@/components/ChartFood.vue";
+import ChartFoodCal from "@/components/ChartFoodCal.vue";
 import { baseUrl } from "@/assets/config.js";
 import axios from "axios";
 
@@ -55,6 +109,8 @@ export default {
   name: "Food",
   components: {
     Menu,
+    ChartFood,
+    ChartFoodCal,
   },
   data() {
     return {
