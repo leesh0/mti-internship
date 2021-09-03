@@ -43,17 +43,21 @@
             </div>
           </div>
           <div class="field" v-if="!isLogin">
-            <div class="ui left icon input">
-              <div class="ui buttons">
-                <button class="ui left attached button">
-                  <i class="male icon"></i>
-                  <label>男性</label>
-                </button>
-                <button class="right attached ui button">
-                  <i class="female icon"></i>
-                  <label>女性</label>
-                </button>
-              </div>
+            <div class="ui left icon input" v-if="!isLogin">
+              <label class="radiobutton"><br>
+                <input class="gender" type="radio" name="gender" value="male" v-model.number="user.sex" checked/>
+              </label>
+              <label class="gender">
+                <i class="male icon"></i>
+                <label>男性</label>
+              </label>
+              <label class="radiobutton"><br>
+                <input class="gender" type="radio" name="gender" value="female" v-model.number="user.sex"/>
+              </label>
+              <label class="gender">
+                <i class="female icon"></i>
+                <label>女性</label>
+              </label>
             </div>
           </div>
           <li v-if="err" class="err-msg">{{ err }}</li>
@@ -62,11 +66,7 @@
           </button>
         </form>
       </div>
-      <button
-        @click="toggleMode()"
-        class="ui huge grey fluid button"
-        type="submit"
-      >
+      <button @click="toggleMode()" class="ui huge grey fluid button" type="submit">
         {{ toggleText }}
       </button>
     </div>
@@ -91,8 +91,9 @@ export default {
         password: null,
         nickname: null,
         age: null,
-        //weight: null,
-        //height: null,
+        weight: null,
+        height: null,
+        sex: null,
       },
       err: null,
     };
@@ -114,6 +115,17 @@ export default {
     toggleMode() {
       this.isLogin = !this.isLogin;
     },
+    //radio button確認用スクリプト
+    /*buttonCheck() {
+      let elements = document.getElementsByName('gender');
+      if (elements.item(0).checked){
+        console.log('選択されているのは ' + elements.item(0).value + ' です');
+        return elements.item(0).value;
+      } else if(elements.item(1).checke){
+        console.log('選択されているのは ' + elements.item(1).value + ' です');
+        return elements.item(1).value;
+      }
+    },*/
     submit() {
       if (this.isLogin) {
         if (!this.user.userId) {
@@ -150,17 +162,24 @@ export default {
         this.err = "ニックネームを入力してください";
       } else if (!this.user.age) {
         this.err = "年齢を入力してください";
-      } else { //ここにweightとheightのif文を追加
+      } else if (!this.user.weight) {
+        this.err = "体重を入力してください";
+      } else if (!this.user.height) {
+        this.err = "身長を入力してください";
+      } else {
         // APIにPOSTリクエストを送る
         const requestBody = {
           userId: this.user.userId,
           password: this.user.password,
           nickname: this.user.nickname,
           age: this.user.age,
+          weight: this.user.weight,
+          height: this.user.height,
+          sex: this.user.sex,
           //ここにweightとheightのif文を追加
         };
         axios
-          .post(baseUrl + "/user/signup", requestBody)
+          .post(baseUrl + "/user/register", requestBody)
           .then((response) => {
             // 成功したときの処理はここに記述する
             localStorage.setItem("token", response.data.token);
@@ -176,4 +195,12 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.radiobutton{
+  margin-left: 10px;
+}
+.gender {
+  margin-left: 5px;
+  margin-top: 24px;
+}
+</style>
