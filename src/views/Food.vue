@@ -1,34 +1,29 @@
 <template>
   <div>
-    <Menu current="food"></Menu>
+    <Menu current="user"></Menu>
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
         <form class="ui form">
           <div class="field">
-            <label>食べ物</label>
-            <input type="text" placeholder="食べ物" v-model="nickname" />
-          </div>
-          <div class="field">
-            <label>食べた量</label>
-            <div class="inline fields">
-                <input type="number" placeholder="g">
+            <label>食べた料理名を入力してください。</label>
+            <div class="ui left icon input">
+              <i class="search icon"></i>
+              <input type="text" placeholder="料理名" v-model="nickname" />
             </div>
           </div>
         </form>
       </div>
       <div class="ui segments">
-        <template v-for="(user, index) in filterdUsers">
+        <template v-for="(user, index) in users">
           <div class="ui segment wrapper" :key="index">
             <h2 class="ui header">
               <div class="content">
-                {{ user.nickname }}
-                <div class="ui green label">
-                  {{ user.age }}
-                </div>
-              </div>
-              <div class="sub header">
-                {{ user.userId }}
+                {{ user.name }}
+                <div class="ui green label">カロリー：{{ user.kcal }} Kcal</div>
+                <div class="ui gray label">タンパク質：{{ user.p }} g</div>
+                <div class="ui gray label">炭水化物：{{ user.c }} g</div>
+                <div class="ui gray label">脂肪：{{ user.f }} g</div>
               </div>
             </h2>
           </div>
@@ -43,7 +38,7 @@ import { baseUrl } from "@/assets/config.js";
 import axios from "axios";
 
 export default {
-  name: "Food",
+  name: "User",
   components: {
     Menu,
   },
@@ -63,45 +58,25 @@ export default {
   },
   computed: {
     // 計算した結果を変数として利用したいときはここに記述する
-    filterdUsers() {
-      let result = [...this.users];
-      if (this.nickname) {
-        result = result.filter((target) => {
-          if (target.nickname) {
-            return target.nickname.match(this.nickname);
-          } else {
-            return;
-          }
+  },
+  watch: {
+    nickname: async function() {
+      console.log("ニックネーム変更");
+      console.log(this.nickname);
+      axios
+        .get(baseUrl + "/food/search?q=" + this.nickname)
+        .then((response) => {
+          // 成功したときの処理はここに記述する
+          console.log(response);
+          this.users = response.data.data;
+        })
+        .catch((err) => {
+          // レスポンスがエラーで返ってきたときの処理はここに記述する
+          console.log(err);
         });
-      }
-      if (this.start) {
-        result = result.filter((target) => {
-          return target.age >= this.start;
-        });
-      }
-      if (this.end) {
-        result = result.filter((target) => {
-          return target.age <= this.end;
-        });
-      }
-      return result;
     },
   },
-  created() {
-    // Vue.jsの読み込みが完了したときに実行する処理はここに記述する
-    const token = localStorage.getItem("token");
-    if (!token) this.$router.push({ name: "Login" });
-
-    axios
-      .get(baseUrl + "/users")
-      .then((response) => {
-        // 成功したときの処理はここに記述する
-        this.users = response.data.users;
-      })
-      .catch(() => {
-        // レスポンスがエラーで返ってきたときの処理はここに記述する
-      });
-  },
+  created() {},
   methods: {
     // Vue.jsで使う関数はここで記述する
   },
