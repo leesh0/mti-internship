@@ -4,6 +4,7 @@
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
+        <BarChart />
       </div>
     </div>
   </div>
@@ -17,13 +18,15 @@
 // import something from '@/components/something.vue';
 import { baseUrl } from "@/assets/config.js";
 import Menu from "@/components/Menu.vue";
+import BarChart from "@/components/BarChart.vue";
 import axios from "axios";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-   // 読み込んだコンポーネント名をここに記述する
-   Menu,
+    // 読み込んだコンポーネント名をここに記述する
+    Menu,
+    BarChart,
   },
   data() {
     // Vue.jsで使う変数はここに記述する
@@ -49,7 +52,7 @@ export default {
     };
   },
   computed: {
-  // 計算した結果を変数として利用したいときはここに記述する
+    // 計算した結果を変数として利用したいときはここに記述する
     sortedArticles() {
       // sort()は破壊的変更のため、一度コピーしてから使う
       const articles = [...this.articles];
