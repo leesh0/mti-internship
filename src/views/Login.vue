@@ -127,6 +127,7 @@ export default {
       }
     },*/
     submit() {
+      let elements = document.getElementsByName('gender'); //radiobuttonの変更を変数に代入
       if (this.isLogin) {
         if (!this.user.userId) {
           this.err = "userIdを入力してください";
@@ -166,6 +167,8 @@ export default {
         this.err = "体重を入力してください";
       } else if (!this.user.height) {
         this.err = "身長を入力してください";
+      } else if (!elements.item(0).checked && elements.item(1).checked) {
+        this.err = "性別を選択してください";
       } else {
         // APIにPOSTリクエストを送る
         const requestBody = {
