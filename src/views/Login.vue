@@ -179,7 +179,6 @@ export default {
           weight: this.user.weight,
           height: this.user.height,
           sex: this.user.sex,
-          //ここにweightとheightのif文を追加
         };
         axios
           .post(baseUrl + "/user/register", requestBody)

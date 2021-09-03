@@ -30,17 +30,21 @@
             </div>
           </div>
           <div class="field">
-            <div class="ui left icon input">
-              <div class="ui buttons">
-                <button class="ui left attached button">
-                  <i class="male icon"></i>
-                  <label>男性</label>
-                </button>
-                <button class="right attached ui button">
-                  <i class="female icon"></i>
-                  <label>女性</label>
-                </button>
-              </div>
+            <div class="ui left icon input" v-if="!isLogin">
+              <label class="radiobutton"><br>
+                <input class="gender" type="radio" name="gender" value="male" v-model.number="user.sex" checked/>
+              </label>
+              <label class="gender">
+                <i class="male icon"></i>
+                <label>男性</label>
+              </label>
+              <label class="radiobutton"><br>
+                <input class="gender" type="radio" name="gender" value="female" v-model.number="user.sex"/>
+              </label>
+              <label class="gender">
+                <i class="female icon"></i>
+                <label>女性</label>
+              </label>
             </div>
           </div>
           <div class="field" v-if="!isLogin">
@@ -87,9 +91,9 @@ export default {
         password: null,
         nickname: null,
         age: null,
-        //weight: null,
-        //height: null,
-
+        weight: null,
+        height: null,
+        sex: null,
       },
       err: null,
     };
@@ -118,6 +122,7 @@ export default {
   methods: {
   // Vue.jsで使う関数はここで記述する
     submit() {
+      let elements = document.getElementsByName('gender'); //radiobuttonの変更を変数に代入
       if (!this.user.password) {
           this.err = 'パスワードを入力してください';
           return;
@@ -127,12 +132,24 @@ export default {
       } else if (!this.user.age) {
           this.err = '年齢を入力してください';
           return;
-      }
+      } else if (!this.user.weight) {
+        this.err = "体重を入力してください";
+        return;
+      } else if (!this.user.height) {
+        this.err = "身長を入力してください";
+        return;
+      } else if (!elements.item(0).checked && !elements.item(1).checked) {
+        this.err = "性別を選択してください";
+        return;
+      } 
       const requestBody = {
         userId: this.user.userId,
         password: this.user.password,
         nickname: this.user.nickname,
-        age: this.user.age
+        age: this.user.age,
+        weight: this.user.weight,
+        height: this.user.height,
+        sex: this.user.sex
       };
       axios.put(baseUrl + "/user", requestBody)
         .then(() => {
@@ -164,7 +181,12 @@ export default {
   }
 }
 </script>
-
 <style scoped>
-
+.radiobutton{
+  margin-left: 10px;
+}
+.gender {
+  margin-left: 5px;
+  margin-top: 24px;
+}
 </style>
