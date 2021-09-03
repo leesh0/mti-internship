@@ -8,30 +8,30 @@
           <div class="field">
             <div class="ui left icon input">
               <i class="user icon"></i>
-              <input type="text" placeholder="ID" v-model="user.userId" required disabled>
+              <input type="text" placeholder="ID" v-model="user.userId" required disabled /> 
             </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
               <i class="lock icon"></i>
-              <input type="text" placeholder="Password" v-model="user.password">
+              <input type="text" placeholder="Password" v-model="user.password" />
             </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
               <i class="tag icon"></i>
-              <input type="text" placeholder="Nickname" v-model="user.nickname">
+              <input type="text" placeholder="Nickname" v-model="user.nickname" />
             </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
               <i class="calendar icon"></i>
-              <input type="text" placeholder="Age" v-model.number="user.age">
+              <input type="text" placeholder="Age" v-model.number="user.age" />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
-               <!-- アイコンを追加 -->
+              <!-- アイコンを追加 -->
               <input type="text" placeholder="体重" v-model.number="user.weight" />
             </div>
           </div>
