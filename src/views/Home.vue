@@ -3,8 +3,9 @@
     <Menu current="home"></Menu>
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
-      <Chart></Chart>
-      <div class="ui segment"></div>
+      <div class="ui segment">
+        <BarChart />
+      </div>
     </div>
   </div>
 </template>
@@ -17,7 +18,7 @@
 // import something from '@/components/something.vue';
 import { baseUrl } from "@/assets/config.js";
 import Menu from "@/components/Menu.vue";
-import Chart from "@/components/Chart.vue";
+import BarChart from "@/components/BarChart.vue";
 import axios from "axios";
 
 export default {
@@ -25,7 +26,7 @@ export default {
   components: {
     // 読み込んだコンポーネント名をここに記述する
     Menu,
-    Chart,
+    BarChart,
   },
   data() {
     // Vue.jsで使う変数はここに記述する
