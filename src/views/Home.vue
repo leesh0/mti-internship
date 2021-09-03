@@ -38,7 +38,8 @@
           <div class="six wide column">
             <div class="ui teal message">
               <h3>今日の目標摂取・消費カロリー</h3>
-              <h1>10Kcal 摂取</h1>
+              <h1 v-if="true">あと 10Kcal 摂取しましょう</h1>
+              <h1 v-else>あと 10Kcal 消費しましょう</h1>
             </div>
           </div>
         </div>
@@ -54,7 +55,7 @@
               <div class="comment">
                 <a class="avatar">
                   <img
-                    src="https://semantic-ui.com/images/avatar/small/stevie.jpg"
+                    src="https://semantic-ui.com/images/avatar/small/elliot.jpg"
                   />
                 </a>
                 <div class="content">
