@@ -4,6 +4,35 @@
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
+        <h3>テストユーザー さん</h3>
+        <table class="ui celled table">
+          <thead>
+            <tr>
+              <th>項目</th>
+              <th>現在の数値</th>
+              <th>目標数値まで</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Name">体重</td>
+              <td data-label="Age">55Kg</td>
+              <td data-label="Job">-5Kg</td>
+            </tr>
+            <tr>
+              <td data-label="Name">身長</td>
+              <td data-label="Age">150Kg</td>
+              <td data-label="Job">+3cm</td>
+            </tr>
+            <tr>
+              <td data-label="Name">ウエスト</td>
+              <td data-label="Age">60cm</td>
+              <td data-label="Job">-5cm</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ui segment">
         <BarChart />
       </div>
     </div>
