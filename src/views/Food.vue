@@ -9,21 +9,21 @@
             <label>食べた料理名を入力してください。</label>
             <div class="ui left icon input">
               <i class="search icon"></i>
-              <input type="text" placeholder="料理名" v-model="nickname" />
+              <input type="text" placeholder="料理名" v-model="foodName" />
             </div>
           </div>
         </form>
       </div>
       <div class="ui segments">
-        <template v-for="(user, index) in users">
+        <template v-for="(data, index) in foodData">
           <div class="ui segment wrapper" :key="index">
             <h2 class="ui header">
               <div class="content">
-                {{ user.name }}
-                <div class="ui green label">カロリー：{{ user.kcal }} Kcal</div>
-                <div class="ui gray label">タンパク質：{{ user.p }} g</div>
-                <div class="ui gray label">炭水化物：{{ user.c }} g</div>
-                <div class="ui gray label">脂肪：{{ user.f }} g</div>
+                {{ data.name }}
+                <div class="ui green label">カロリー：{{ data.kcal }} Kcal</div>
+                <div class="ui gray label">タンパク質：{{ data.p }} g</div>
+                <div class="ui gray label">炭水化物：{{ data.c }} g</div>
+                <div class="ui gray label">脂肪：{{ data.f }} g</div>
               </div>
             </h2>
           </div>
@@ -38,37 +38,30 @@ import { baseUrl } from "@/assets/config.js";
 import axios from "axios";
 
 export default {
-  name: "User",
+  name: "Food",
   components: {
     Menu,
   },
   data() {
     return {
       // Vue.jsで使う変数はここに記述する
-      users: [],
-      nickname: null,
-      start: 0,
-      end: 100,
-      query: {
-        nickname: null,
-        start: null,
-        end: null,
-      },
+      foodData: [],
+      foodName: "",
     };
   },
   computed: {
     // 計算した結果を変数として利用したいときはここに記述する
   },
   watch: {
-    nickname: async function() {
+    foodName: async function() {
       console.log("ニックネーム変更");
-      console.log(this.nickname);
+      console.log(this.foodName);
       axios
-        .get(baseUrl + "/food/search?q=" + this.nickname)
+        .get(baseUrl + "/food/search?q=" + this.foodName)
         .then((response) => {
           // 成功したときの処理はここに記述する
           console.log(response);
-          this.users = response.data.data;
+          this.foodData = response.data.data;
         })
         .catch((err) => {
           // レスポンスがエラーで返ってきたときの処理はここに記述する
@@ -76,7 +69,19 @@ export default {
         });
     },
   },
-  created() {},
+  created() {
+    axios
+      .get(baseUrl + "/food/search?q=" + this.foodName)
+      .then((response) => {
+        // 成功したときの処理はここに記述する
+        console.log(response);
+        this.foodData = response.data.data;
+      })
+      .catch((err) => {
+        // レスポンスがエラーで返ってきたときの処理はここに記述する
+        console.log(err);
+      });
+  },
   methods: {
     // Vue.jsで使う関数はここで記述する
   },
