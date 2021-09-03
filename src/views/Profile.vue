@@ -29,6 +29,20 @@
               <input type="text" placeholder="年齢" v-model.number="user.age" />
             </div>
           </div>
+          <div class="field">
+            <div class="ui left icon input">
+              <div class="ui buttons">
+                <button class="ui left attached button">
+                  <i class="male icon"></i>
+                  <label>男性</label>
+                </button>
+                <button class="right attached ui button">
+                  <i class="female icon"></i>
+                  <label>女性</label>
+                </button>
+              </div>
+            </div>
+          </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
               <!-- アイコンを追加 -->
