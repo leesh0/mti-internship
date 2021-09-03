@@ -29,6 +29,18 @@
               <input type="text" placeholder="Age" v-model.number="user.age">
             </div>
           </div>
+          <div class="field" v-if="!isLogin">
+            <div class="ui left icon input">
+               <!-- アイコンを追加 -->
+              <input type="text" placeholder="体重" v-model.number="user.weight" />
+            </div>
+          </div>
+          <div class="field" v-if="!isLogin">
+            <div class="ui left icon input">
+              <!-- アイコンを追加 -->
+              <input type="text" placeholder="身長" v-model.number="user.height" />
+            </div>
+          </div>
           <template v-if="err">
             <li class="err-msg">{{ err }}</li>
           </template>
@@ -60,9 +72,12 @@ export default {
         userId: localStorage.getItem('userId'),
         password: null,
         nickname: null,
-        age: null
+        age: null,
+        //weight: null,
+        //height: null,
+
       },
-      err: null
+      err: null,
     };
   },
   computed: {

@@ -15,26 +15,31 @@
             <div class="ui left icon input">
               <i class="lock icon"></i>
               <input
-                type="password"
-                placeholder="Password"
-                v-model="user.password"
-              />
+                type="password" placeholder="Password" v-model="user.password" />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
               <i class="tag icon"></i>
-              <input
-                type="text"
-                placeholder="Nickname"
-                v-model="user.nickname"
-              />
+              <input type="text" placeholder="ニックネーム" v-model="user.nickname" />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
               <i class="calendar icon"></i>
-              <input type="text" placeholder="Age" v-model.number="user.age" />
+              <input type="text" placeholder="年齢" v-model.number="user.age" />
+            </div>
+          </div>
+          <div class="field" v-if="!isLogin">
+            <div class="ui left icon input">
+               <!-- アイコンを追加 -->
+              <input type="text" placeholder="体重" v-model.number="user.weight" />
+            </div>
+          </div>
+          <div class="field" v-if="!isLogin">
+            <div class="ui left icon input">
+              <!-- アイコンを追加 -->
+              <input type="text" placeholder="身長" v-model.number="user.height" />
             </div>
           </div>
           <li v-if="err" class="err-msg">{{ err }}</li>
@@ -72,6 +77,8 @@ export default {
         password: null,
         nickname: null,
         age: null,
+        //weight: null,
+        //height: null,
       },
       err: null,
     };
@@ -129,13 +136,14 @@ export default {
         this.err = "ニックネームを入力してください";
       } else if (!this.user.age) {
         this.err = "年齢を入力してください";
-      } else {
+      } else { //ここにweightとheightのif文を追加
         // APIにPOSTリクエストを送る
         const requestBody = {
           userId: this.user.userId,
           password: this.user.password,
           nickname: this.user.nickname,
           age: this.user.age,
+          //ここにweightとheightのif文を追加
         };
         axios
           .post(baseUrl + "/user/signup", requestBody)
