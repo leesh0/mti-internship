@@ -23,6 +23,11 @@ exports.handler = (event, context, callback) => {
     'sex',
   ]
 
+  const param = {
+    TableName: tableName,
+    Item: {},
+  }
+
   for (const field of registerFields) {
     if (!body[field]) {
       response.statusCode = 400
@@ -31,26 +36,13 @@ exports.handler = (event, context, callback) => {
       })
       callback(null, response)
       return
+    } else {
+      param.Item[field] = body[field]
     }
-  }
-
-  //TODO: DBに登録するための情報をparamオブジェクトとして宣言する（中身を記述）
-  const param = {
-    TableName: tableName,
-    Item: {
-      userId: body.userId,
-      password: body.password,
-      nickName: body.nickName,
-      age: body.age,
-      weight: body.weight,
-      height: body.height,
-      sex: body.sex,
-    },
   }
 
   //dynamo.put()でDBにデータを登録
   dynamo.put(param, function(err, data) {
-    console.log(err)
     if (err) {
       response.statusCode = 500
       response.body = JSON.stringify({
