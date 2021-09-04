@@ -45,14 +45,14 @@
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input" v-if="!isLogin">
               <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="male" v-model.number="user.sex" checked/>
+                <input class="gender" type="radio" name="gender" value="male" v-model="user.sex" checked/>
               </label>
               <label class="gender">
                 <i class="male icon"></i>
                 <label>男性</label>
               </label>
               <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="female" v-model.number="user.sex"/>
+                <input class="gender" type="radio" name="gender" value="female" v-model="user.sex"/>
               </label>
               <label class="gender">
                 <i class="female icon"></i>

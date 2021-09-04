@@ -29,24 +29,6 @@
               <input type="text" placeholder="年齢" v-model.number="user.age" />
             </div>
           </div>
-          <div class="field">
-            <div class="ui left icon input" v-if="!isLogin">
-              <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="male" v-model.number="user.sex" checked/>
-              </label>
-              <label class="gender">
-                <i class="male icon"></i>
-                <label>男性</label>
-              </label>
-              <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="female" v-model.number="user.sex"/>
-              </label>
-              <label class="gender">
-                <i class="female icon"></i>
-                <label>女性</label>
-              </label>
-            </div>
-          </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
               <!-- アイコンを追加 -->
@@ -57,6 +39,24 @@
             <div class="ui left icon input">
               <!-- アイコンを追加 -->
               <input type="text" placeholder="身長" v-model.number="user.height" />
+            </div>
+          </div>
+           <div class="field">
+            <div class="ui left icon input" v-if="!isLogin">
+              <label class="radiobutton"><br>
+                <input class="gender" type="radio" name="gender" value="male" v-model="user.sex" checked/>
+              </label>
+              <label class="gender">
+                <i class="male icon"></i>
+                <label>男性</label>
+              </label>
+              <label class="radiobutton"><br>
+                <input class="gender" type="radio" name="gender" value="female" v-model="user.sex"/>
+              </label>
+              <label class="gender">
+                <i class="female icon"></i>
+                <label>女性</label>
+              </label>
             </div>
           </div>
           <template v-if="err">
