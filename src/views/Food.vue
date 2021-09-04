@@ -119,25 +119,6 @@ import ChartFoodCal from "@/components/ChartFoodCal.vue";
 import { baseUrl } from "@/assets/config.js";
 import axios from "axios";
 
-function getSearchFoodData() {
-  const auth_token = "mti-2021-final";
-  axios
-    .get(baseUrl + "/api/nutrition-search?q=" + this.foodName, {
-      headers: {
-        token: auth_token,
-      },
-    })
-    .then((response) => {
-      // 成功したときの処理はここに記述する
-      console.log(response.data.items);
-      this.foodData = response.data.items;
-    })
-    .catch((err) => {
-      // レスポンスがエラーで返ってきたときの処理はここに記述する
-      console.log(err);
-    });
-}
-
 export default {
   name: "Food",
   components: {
@@ -157,11 +138,42 @@ export default {
   },
   watch: {
     foodName: async function() {
-      getSearchFoodData();
+      const auth_token = "mti-2021-final";
+      axios
+        .get(baseUrl + "/api/nutrition-search?q=" + this.foodName, {
+          headers: {
+            token: auth_token,
+          },
+        })
+        .then((response) => {
+          // 成功したときの処理はここに記述する
+          console.log(response.data.items);
+          this.foodData = response.data.items;
+        })
+        .catch((err) => {
+          // レスポンスがエラーで返ってきたときの処理はここに記述する
+          console.log(err);
+        });
     },
   },
   created() {
-    getSearchFoodData();
+    const auth_token = "mti-2021-final";
+    axios
+      .get(baseUrl + "/api/nutrition-search?q=" + this.foodName, {
+        headers: {
+          token: auth_token,
+        },
+      })
+      .then((response) => {
+        // 成功したときの処理はここに記述する
+        console.log(response.data.items);
+        this.foodData = response.data.items;
+      })
+      .catch((err) => {
+        // レスポンスがエラーで返ってきたときの処理はここに記述する
+        window.alert("エラー");
+        console.log(err);
+      });
   },
   methods: {
     // Vue.jsで使う関数はここで記述する
@@ -182,7 +194,17 @@ export default {
       );
       console.log(UnixTimestamp);
 
-      window.alert(foodId + "\n" + eated + "\n" + UnixTimestamp + "を記録");
+      window.alert(
+        "料理ID : " +
+          foodId +
+          "\n" +
+          "食べた量(g) : " +
+          eated +
+          "\n" +
+          "食べた時間 : " +
+          UnixTimestamp +
+          "を記録"
+      );
     },
   },
 };
