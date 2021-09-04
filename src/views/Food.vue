@@ -119,6 +119,25 @@ import ChartFoodCal from "@/components/ChartFoodCal.vue";
 import { baseUrl } from "@/assets/config.js";
 import axios from "axios";
 
+function getSearchFoodData() {
+  const auth_token = "mti-2021-final";
+  axios
+    .get(baseUrl + "/api/nutrition-search?q=" + this.foodName, {
+      headers: {
+        token: auth_token,
+      },
+    })
+    .then((response) => {
+      // 成功したときの処理はここに記述する
+      console.log(response.data.items);
+      this.foodData = response.data.items;
+    })
+    .catch((err) => {
+      // レスポンスがエラーで返ってきたときの処理はここに記述する
+      console.log(err);
+    });
+}
+
 export default {
   name: "Food",
   components: {
@@ -138,42 +157,11 @@ export default {
   },
   watch: {
     foodName: async function() {
-      const auth_token = "mti-2021-final";
-      axios
-        .get(baseUrl + "/api/nutrition-search?q=" + this.foodName, {
-          headers: {
-            token: auth_token,
-          },
-        })
-        .then((response) => {
-          // 成功したときの処理はここに記述する
-          console.log(response.data.items);
-          this.foodData = response.data.items;
-        })
-        .catch((err) => {
-          // レスポンスがエラーで返ってきたときの処理はここに記述する
-          console.log(err);
-        });
+      getSearchFoodData();
     },
   },
   created() {
-    const auth_token = "mti-2021-final";
-    axios
-      .get(baseUrl + "/api/nutrition-search?q=" + this.foodName, {
-        headers: {
-          token: auth_token,
-        },
-      })
-      .then((response) => {
-        // 成功したときの処理はここに記述する
-        console.log(response.data.items);
-        this.foodData = response.data.items;
-      })
-      .catch((err) => {
-        // レスポンスがエラーで返ってきたときの処理はここに記述する
-        window.alert("エラー");
-        console.log(err);
-      });
+    getSearchFoodData();
   },
   methods: {
     // Vue.jsで使う関数はここで記述する
