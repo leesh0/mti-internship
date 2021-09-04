@@ -151,6 +151,23 @@ export default {
         // レスポンスがエラーで返ってきたときの処理はここに記述する
         console.log(err);
       });
+    //---------------------------------------------------------------------------------
+    const auth_token = localStorage.getItem("FatSecretPlatformToken");
+    //localStorage.setItem("FatSecretPlatformToken", auth_token);
+    axios
+      .get(baseUrl + "/api/token", {
+        headers: {
+          token: auth_token,
+        },
+      })
+      .then((res) => {
+        window.alert("FatSecretPlatform APIシークレット取得");
+        console.log(res);
+      })
+      .catch((error) => {
+        window.alert("FatSecretPlatform APIシークレット失敗");
+        console.log(error);
+      });
   },
   methods: {
     // Vue.jsで使う関数はここで記述する
