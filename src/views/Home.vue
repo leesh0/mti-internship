@@ -86,7 +86,7 @@
               <div class="comment">
                 <a class="avatar">
                   <img
-                    src="https://semantic-ui.com/images/avatar/small/stevie.jpg"
+                    src="https://semantic-ui.com/images/avatar/small/elliot.jpg"
                   />
                 </a>
                 <div class="content">

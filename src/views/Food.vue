@@ -157,6 +157,9 @@ export default {
     },
   },
   created() {
+    const token = localStorage.getItem("token");
+    if (!token) this.$router.push({ name: "Login" });
+
     const auth_token = "mti-2021-final";
     axios
       .get(baseUrl + "/api/nutrition-search?q=" + this.foodName, {
