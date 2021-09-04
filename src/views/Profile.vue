@@ -20,7 +20,7 @@
           <div class="field">
             <div class="ui left icon input">
               <i class="tag icon"></i>
-              <input type="text" placeholder="ニックネーム" v-model="user.nickname" />
+              <input type="text" placeholder="ニックネーム" v-model="user.nickName" />
             </div>
           </div>
           <div class="field">
@@ -89,7 +89,7 @@ export default {
       user: {
         userId: localStorage.getItem('userId'),
         password: null,
-        nickname: null,
+        nickName: null,
         age: null,
         weight: null,
         height: null,
@@ -110,7 +110,7 @@ export default {
       .then((response) => {
         // 成功したときの処理はここに記述する
         console.log(response);
-        this.user.nickname = response.data.nickname;
+        this.user.nickName = response.data.nickName;
         this.user.age = response.data.age;
       })
       .catch(() => {
@@ -126,7 +126,7 @@ export default {
       if (!this.user.password) {
           this.err = 'パスワードを入力してください';
           return;
-      } else if (!this.user.nickname) {
+      } else if (!this.user.nickName) {
           this.err = 'ニックネームを入力してください';
           return;
       } else if (!this.user.age) {
@@ -145,7 +145,7 @@ export default {
       const requestBody = {
         userId: this.user.userId,
         password: this.user.password,
-        nickname: this.user.nickname,
+        nickName: this.user.nickName,
         age: this.user.age,
         weight: this.user.weight,
         height: this.user.height,

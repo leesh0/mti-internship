@@ -21,7 +21,7 @@
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
               <i class="tag icon"></i>
-              <input type="text" placeholder="ニックネーム" v-model="user.nickname" />
+              <input type="text" placeholder="ニックネーム" v-model="user.nickName" />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
@@ -45,14 +45,14 @@
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input" v-if="!isLogin">
               <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="male" v-model="user.sex" checked/>
+                <input class="gender" type="radio" name="gender" value="male" checked/>
               </label>
               <label class="gender">
                 <i class="male icon"></i>
                 <label>男性</label>
               </label>
               <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="female" v-model="user.sex"/>
+                <input class="gender" type="radio" name="gender" value="female" />
               </label>
               <label class="gender">
                 <i class="female icon"></i>
@@ -89,7 +89,7 @@ export default {
       user: {
         userId: null,
         password: null,
-        nickname: null,
+        nickName: null,
         age: null,
         weight: null,
         height: null,
@@ -128,6 +128,11 @@ export default {
     },*/
     submit() {
       let elements = document.getElementsByName('gender'); //radiobuttonの変更を変数に代入
+      if (elements.item(0).checked) {
+        this.user.sex = "male";
+      } else if (elements.item(1).checked){
+        this.user.sex = "female";
+      }
       if (this.isLogin) {
         if (!this.user.userId) {
           this.err = "userIdを入力してください";
@@ -159,7 +164,7 @@ export default {
         this.err = "userIdを入力してください";
       } else if (!this.user.password) {
         this.err = "パスワードを入力してください";
-      } else if (!this.user.nickname) {
+      } else if (!this.user.nickName) {
         this.err = "ニックネームを入力してください";
       } else if (!this.user.age) {
         this.err = "年齢を入力してください";
@@ -167,14 +172,12 @@ export default {
         this.err = "体重を入力してください";
       } else if (!this.user.height) {
         this.err = "身長を入力してください";
-      } else if (!elements.item(0).checked && !elements.item(1).checked) {
-        this.err = "性別を選択してください";
       } else {
         // APIにPOSTリクエストを送る
         const requestBody = {
           userId: this.user.userId,
           password: this.user.password,
-          nickname: this.user.nickname,
+          nickName: this.user.nickName,
           age: this.user.age,
           weight: this.user.weight,
           height: this.user.height,
