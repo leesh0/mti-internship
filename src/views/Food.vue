@@ -7,9 +7,7 @@
         <h2>カロリー摂取・消費状況</h2>
         <ChartFoodCal />
         <div class="ui message">
-          <div class="header">
-            アドバイス
-          </div>
+          <div class="header">アドバイス</div>
           <div class="ui comments">
             <div class="comment">
               <a class="avatar">
@@ -29,9 +27,7 @@
         <h2>栄養摂取状況</h2>
         <ChartFood />
         <div class="ui message">
-          <div class="header">
-            アドバイス
-          </div>
+          <div class="header">アドバイス</div>
           <div class="ui comments">
             <div class="comment">
               <a class="avatar">
@@ -69,28 +65,46 @@
       <div v-show="foodData.length !== 0" class="ui segments">
         <template v-for="(data, index) in foodData">
           <div class="ui segment wrapper" :key="index">
-            <div class="ui grid">
-              <div class="fourteen wide column">
-                <h2 class="ui header">
-                  <div class="content">
-                    {{ data.name }}
-                    <div class="ui green label">
-                      カロリー：{{ data.kcal }} Kcal
-                    </div>
-                    <div class="ui gray label">タンパク質：{{ data.p }} g</div>
-                    <div class="ui gray label">炭水化物：{{ data.c }} g</div>
-                    <div class="ui gray label">脂肪：{{ data.f }} g</div>
-                  </div>
-                </h2>
+            <h2 class="ui header">
+              <div class="content">
+                {{ data.item.description }}
+                <div class="ui green label">
+                  カロリー：{{ data.item.nutritional_contents.energy.value }}
+                  Kcal
+                </div>
+                <div class="ui gray label">
+                  タンパク質：{{ data.item.nutritional_contents.protein }} g
+                </div>
+                <div class="ui gray label">
+                  炭水化物：{{ data.item.nutritional_contents.carbohydrates }}
+                  g
+                </div>
+                <div class="ui gray label">
+                  脂肪：{{ data.item.nutritional_contents.fat }} g
+                </div>
               </div>
-              <div class="two wide column">
-                <button
-                  class="ui primary button"
-                  v-on:click="submit(data.name)"
-                >
-                  記録
-                </button>
+            </h2>
+            <div class="ui input">
+              <div>
+                <input
+                  type="text"
+                  placeholder="食べた量(g)"
+                  :id="data.item.id + 'eated'"
+                />
               </div>
+              <div class="ml-5">
+                <input
+                  type="time"
+                  placeholder="食べた時間()"
+                  :id="data.item.id + 'timestamp'"
+                />
+              </div>
+              <button
+                class="ui primary button tiny ml-5"
+                v-on:click="submit(data.item.id)"
+              >
+                記録
+              </button>
             </div>
           </div>
         </template>
@@ -116,7 +130,7 @@ export default {
     return {
       // Vue.jsで使う変数はここに記述する
       foodData: [],
-      foodName: "",
+      foodName: "カレー",
     };
   },
   computed: {
@@ -124,14 +138,17 @@ export default {
   },
   watch: {
     foodName: async function() {
-      console.log("ニックネーム変更");
-      console.log(this.foodName);
+      const auth_token = "mti-2021-final";
       axios
-        .get(baseUrl + "/food/search?q=" + this.foodName)
+        .get(baseUrl + "/api/nutrition-search?q=" + this.foodName, {
+          headers: {
+            token: auth_token,
+          },
+        })
         .then((response) => {
           // 成功したときの処理はここに記述する
-          console.log(response);
-          this.foodData = response.data.data;
+          console.log(response.data.items);
+          this.foodData = response.data.items;
         })
         .catch((err) => {
           // レスポンスがエラーで返ってきたときの処理はここに記述する
@@ -140,45 +157,50 @@ export default {
     },
   },
   created() {
+    const auth_token = "mti-2021-final";
     axios
-      .get(baseUrl + "/food/search?q=" + this.foodName)
-      .then((response) => {
-        // 成功したときの処理はここに記述する
-        console.log(response);
-        this.foodData = response.data.data;
-      })
-      .catch((err) => {
-        // レスポンスがエラーで返ってきたときの処理はここに記述する
-        console.log(err);
-      });
-    //---------------------------------------------------------------------------------
-    const auth_token = localStorage.getItem("FatSecretPlatformToken");
-    //localStorage.setItem("FatSecretPlatformToken", auth_token);
-    axios
-      .get(baseUrl + "/api/token", {
+      .get(baseUrl + "/api/nutrition-search?q=" + this.foodName, {
         headers: {
           token: auth_token,
         },
       })
-      .then((res) => {
-        window.alert("FatSecretPlatform APIシークレット取得");
-        console.log(res);
+      .then((response) => {
+        // 成功したときの処理はここに記述する
+        console.log(response.data.items);
+        this.foodData = response.data.items;
       })
-      .catch((error) => {
-        window.alert("FatSecretPlatform APIシークレット失敗");
-        console.log(error);
+      .catch((err) => {
+        // レスポンスがエラーで返ってきたときの処理はここに記述する
+        window.alert("エラー");
+        console.log(err);
       });
   },
   methods: {
     // Vue.jsで使う関数はここで記述する
-    submit(foodName) {
-      window.alert(foodName + "を記録");
+    submit(foodId) {
+      const eated = document.getElementById(foodId + "eated").value;
+      const timestamp = document.getElementById(foodId + "timestamp").value;
+      console.log(timestamp);
+
+      const today = new Date();
+      const month = today.getMonth() + 1;
+      const date = today.getDate();
+      const UnixTimestamp = Date.parse(
+        `${today.getFullYear()}-${month
+          .toString()
+          .padStart(2, "0")}-${date
+          .toString()
+          .padStart(2, "0")} ${timestamp}:00`
+      );
+      console.log(UnixTimestamp);
+
+      window.alert(foodId + "\n" + eated + "\n" + UnixTimestamp + "を記録");
     },
   },
 };
 </script>
 <style scoped>
-.savebtn {
-  margin-left: 30px;
+.ml-5 {
+  margin-left: 5px;
 }
 </style>
