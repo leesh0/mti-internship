@@ -5,7 +5,7 @@
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
         <h2>{{ userData.nickName }} さん</h2>
-        <p v-if="userData.sex === 'male'"><i class="female icon"></i>女性</p>
+        <p v-if="userData.sex === 'female'"><i class="female icon"></i>女性</p>
         <p v-else><i class="male icon"></i>男性</p>
         <p>{{ userData.age }} 歳</p>
         <!--  -->
