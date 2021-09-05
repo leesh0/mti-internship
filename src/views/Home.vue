@@ -5,9 +5,6 @@
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
         <h2>{{ userData.nickName }} さん</h2>
-        <p v-if="userData.sex === 'female'"><i class="female icon"></i>女性</p>
-        <p v-else><i class="male icon"></i>男性</p>
-        <p>{{ userData.age }} 歳</p>
         <!--  -->
         <div class="ui grid">
           <div class="ten wide column">
@@ -15,10 +12,23 @@
               <thead>
                 <tr>
                   <th>項目</th>
-                  <th>現在の数値</th>
+                  <th>データ</th>
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td data-label="Name">性別</td>
+                  <td data-label="Age">
+                    <p v-if="userData.sex === 'female'">
+                      <i class="female icon"></i>女性
+                    </p>
+                    <p v-else><i class="male icon"></i>男性</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="Name">年齢</td>
+                  <td data-label="Age">{{ userData.age }} 歳</td>
+                </tr>
                 <tr>
                   <td data-label="Name">体重</td>
                   <td data-label="Age">{{ userData.weight }} Kg</td>
