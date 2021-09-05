@@ -15,13 +15,20 @@
             <div class="ui left icon input">
               <i class="lock icon"></i>
               <input
-                type="password" placeholder="パスワード" v-model="user.password" />
+                type="password"
+                placeholder="パスワード"
+                v-model="user.password"
+              />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
               <i class="tag icon"></i>
-              <input type="text" placeholder="ニックネーム" v-model="user.nickName" />
+              <input
+                type="text"
+                placeholder="ニックネーム"
+                v-model="user.nickName"
+              />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
@@ -33,26 +40,48 @@
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
               <i class="user icon"></i>
-              <input type="text" placeholder="体重" v-model.number="user.weight" />
+              <input
+                type="text"
+                placeholder="体重"
+                v-model.number="user.weight"
+              />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
               <i class="user icon"></i>
-              <input type="text" placeholder="身長" v-model.number="user.height" />
+              <input
+                type="text"
+                placeholder="身長"
+                v-model.number="user.height"
+              />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input" v-if="!isLogin">
-              <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="male" v-model="user.sex" />
+              <label class="radiobutton"
+                ><br />
+                <input
+                  class="gender"
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  v-model="user.sex"
+                />
               </label>
               <label class="gender">
                 <i class="male icon"></i>
                 <label>男性</label>
               </label>
-              <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="female" v-model="user.sex" />
+              <label class="radiobutton"
+                ><br />
+                <input
+                  class="gender"
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  v-model="user.sex"
+                />
               </label>
               <label class="gender">
                 <i class="female icon"></i>
@@ -66,21 +95,28 @@
           </button>
         </form>
       </div>
-      <button @click="toggleMode()" class="ui huge grey fluid button" type="submit">
+      <button
+        @click="toggleMode()"
+        class="ui huge grey fluid button"
+        type="submit"
+      >
         {{ toggleText }}
       </button>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
 import { baseUrl } from "@/assets/config.js";
 import axios from "axios";
 import Menu from "@/components/Menu.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "Login",
   components: {
     Menu,
+    Footer,
   },
   data() {
     // Vue.jsで使う変数はここに記述する
@@ -195,7 +231,7 @@ export default {
 };
 </script>
 <style scoped>
-.radiobutton{
+.radiobutton {
   margin-left: 10px;
 }
 .gender {

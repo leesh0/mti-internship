@@ -42,10 +42,12 @@
         </template>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
 import Menu from "@/components/Menu.vue";
+import Footer from "@/components/Footer.vue";
 import { baseUrl } from "@/assets/config.js";
 import axios from "axios";
 
@@ -53,6 +55,7 @@ export default {
   name: "Exercise",
   components: {
     Menu,
+    Footer,
   },
   data() {
     return {
