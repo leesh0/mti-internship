@@ -137,7 +137,7 @@ export default {
       } else if (!this.user.height) {
         this.err = '身長を入力してください';
         return;
-      } else {
+      } 
       const requestBody = {
         userId: this.user.userId,
         password: this.user.password,
@@ -161,7 +161,6 @@ export default {
           // レスポンスがエラーで返ってきたときの処理はここに記述する
           throw new Error(e);
         });
-      }
     },
   }
 }
