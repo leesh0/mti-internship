@@ -3,6 +3,23 @@ const dynamo = new AWS.DynamoDB.DocumentClient()
 const tableName = 'Team1UserLog'
 const userTableName = 'Team1User'
 
+const cyrb53 = function(str, seed = 0) {
+  let h1 = 0xdeadbeef ^ seed,
+    h2 = 0x41c6ce57 ^ seed
+  for (let i = 0, ch; i < str.length; i++) {
+    ch = str.charCodeAt(i)
+    h1 = Math.imul(h1 ^ ch, 2654435761)
+    h2 = Math.imul(h2 ^ ch, 1597334677)
+  }
+  h1 =
+    Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^
+    Math.imul(h2 ^ (h2 >>> 13), 3266489909)
+  h2 =
+    Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^
+    Math.imul(h1 ^ (h1 >>> 13), 3266489909)
+  return 4294967296 * (2097151 & h2) + (h1 >>> 0)
+}
+
 async function dget(params) {
   try {
     return await dynamo.get(params).promise()
@@ -120,6 +137,7 @@ exports.handler = async (event, context, callback) => {
       Item: {
         userId: requestUser,
         logType: requestBody.logType, // has 2 types. ate: ate food log / training: done home training
+        clear: false,
         timestamp: requestBody.timestamp ? requestBody.timestamp : Date.now(),
         details: requestBody.details,
       },
@@ -144,6 +162,7 @@ exports.handler = async (event, context, callback) => {
     const timeStart = requestParams.start ? requestParams.start : 0
     const timeEnd = requestParams.end ? requestParams.end : Date.now()
     const logType = requestParams.log_type
+    const isCleared = requestParams.is_clear
 
     let kce = 'userId = :uid AND (#time BETWEEN :from AND :to)' // KeyConditionExpression
     let ean = {
@@ -157,12 +176,18 @@ exports.handler = async (event, context, callback) => {
       ':to': parseInt(timeEnd),
     }
 
-    let filter = null
+    let filter = ''
+
+    if (isCleared !== undefined) {
+      ean['#clear'] = 'clear'
+      eav[':isClear'] = isCleared === 'true'
+      filter += '#clear = :isClear'
+    }
 
     if (logType) {
       ean['#logtype'] = 'logType'
       eav[':ltype'] = logType
-      filter = '#logtype = :ltype'
+      filter += filter == '' ? '#logtype = :ltype' : ' AND #logtype = :ltype'
     }
 
     dynamoParam = {
