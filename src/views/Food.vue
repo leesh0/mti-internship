@@ -57,6 +57,15 @@
           </div>
         </form>
       </div>
+      <div class="ui segment">
+        <p>
+          今日
+          <span class="today"
+            >{{ new Date().getMonth() + 1 }}月{{ new Date().getDate() }}日</span
+          >
+          に摂った食事を記録してください。
+        </p>
+      </div>
       <div v-show="foodData.length === 0" class="ui segments">
         <div class="ui orange message">
           入力された料理は登録されていません。
@@ -110,10 +119,12 @@
         </template>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
 import Menu from "@/components/Menu.vue";
+import Footer from "@/components/Footer.vue";
 import ChartFood from "@/components/ChartFood.vue";
 import ChartFoodCal from "@/components/ChartFoodCal.vue";
 import { baseUrl } from "@/assets/config.js";
@@ -123,6 +134,7 @@ export default {
   name: "Food",
   components: {
     Menu,
+    Footer,
     ChartFood,
     ChartFoodCal,
   },
@@ -138,7 +150,8 @@ export default {
   },
   watch: {
     foodName: async function() {
-      const auth_token = "mti-2021-final";
+      //const auth_token = "mti-2021-final";
+      const auth_token = localStorage.getItem("token");
       axios
         .get(baseUrl + "/api/nutrition-search?q=" + this.foodName, {
           headers: {
@@ -160,7 +173,8 @@ export default {
     const token = localStorage.getItem("token");
     if (!token) this.$router.push({ name: "Login" });
 
-    const auth_token = "mti-2021-final";
+    //const auth_token = "mti-2021-final";
+    const auth_token = localStorage.getItem("token");
     axios
       .get(baseUrl + "/api/nutrition-search?q=" + this.foodName, {
         headers: {
@@ -183,6 +197,15 @@ export default {
     submit(foodId) {
       const eated = document.getElementById(foodId + "eated").value;
       const timestamp = document.getElementById(foodId + "timestamp").value;
+
+      // Nullチェック
+      if (!eated) {
+        window.alert("食べた量が入力されていません。");
+        return;
+      } else if (!timestamp) {
+        window.alert("食べた時間が入力されていません。");
+        return;
+      }
       console.log(timestamp);
 
       const today = new Date();
@@ -215,5 +238,9 @@ export default {
 <style scoped>
 .ml-5 {
   margin-left: 5px;
+}
+.today {
+  font-size: 160%;
+  font-weight: bolder;
 }
 </style>
