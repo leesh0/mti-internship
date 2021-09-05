@@ -44,14 +44,14 @@
            <div class="field">
             <div class="ui left icon input" v-if="!isLogin">
               <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="male" v-model="user.sex" checked/>
+                <input class="gender" type="radio" name="gender" value="male" v-model="user.sex" />
               </label>
               <label class="gender">
                 <i class="male icon"></i>
                 <label>男性</label>
               </label>
               <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="female" v-model="user.sex"/>
+                <input class="gender" type="radio" name="gender" value="female" v-model="user.sex" />
               </label>
               <label class="gender">
                 <i class="female icon"></i>
@@ -106,7 +106,7 @@ export default {
     const token = localStorage.getItem("token");
     if (!token) this.$router.push({name: "Login"});
 
-    axios.get(baseUrl + "/user" + "?userId=" + this.user.userId)
+    axios.get(baseUrl + "/user/profile" + "?userId=" + this.user.userId)
       .then((response) => {
         // 成功したときの処理はここに記述する
         console.log(response);
@@ -122,7 +122,6 @@ export default {
   methods: {
   // Vue.jsで使う関数はここで記述する
     submit() {
-      let elements = document.getElementsByName('gender'); //radiobuttonの変更を変数に代入
       if (!this.user.password) {
           this.err = 'パスワードを入力してください';
           return;
@@ -138,10 +137,7 @@ export default {
       } else if (!this.user.height) {
         this.err = "身長を入力してください";
         return;
-      } else if (!elements.item(0).checked && !elements.item(1).checked) {
-        this.err = "性別を選択してください";
-        return;
-      } 
+      } else {
       const requestBody = {
         userId: this.user.userId,
         password: this.user.password,
@@ -151,7 +147,7 @@ export default {
         height: this.user.height,
         sex: this.user.sex
       };
-      axios.put(baseUrl + "/user", requestBody)
+      axios.put(baseUrl + "/user/profile", requestBody)
         .then(() => {
           // 成功したときの処理はここに記述する
           this.$router.push({ name: 'Home'});
@@ -159,8 +155,8 @@ export default {
         .catch((e) => {
           // レスポンスがエラーで返ってきたときの処理はここに記述する
           throw new Error(e);
-        }
-      );
+        });
+      }
     },
     deleteUser() {
       axios.delete(baseUrl + "/user", {
