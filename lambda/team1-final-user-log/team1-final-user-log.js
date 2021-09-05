@@ -7,6 +7,7 @@ async function dget(params) {
   try {
     return await dynamo.get(params).promise()
   } catch (e) {
+    console.log(e)
     return false
   }
 }
@@ -15,6 +16,7 @@ async function dput(params) {
   try {
     return await dynamo.put(params).promise()
   } catch (e) {
+    console.log(e)
     return false
   }
 }
@@ -23,6 +25,7 @@ async function ddel(params) {
   try {
     return await dynamo.delete(params).promise()
   } catch (e) {
+    console.log(e)
     return false
   }
 }
@@ -31,6 +34,7 @@ async function dq(params) {
   try {
     return await dynamo.query(params).promise()
   } catch (e) {
+    console.log(e)
     return false
   }
 }
@@ -139,27 +143,37 @@ exports.handler = async (event, context, callback) => {
 
     const timeStart = requestParams.start ? requestParams.start : 0
     const timeEnd = requestParams.end ? requestParams.end : Date.now()
-    const logType = requestParams.logType
+    const logType = requestParams.log_type
 
     let kce = 'userId = :uid AND (#time BETWEEN :from AND :to)' // KeyConditionExpression
+    let ean = {
+      // ExpressionAttributeNames
+      '#time': 'timestamp',
+    }
+    let eav = {
+      // ExpressionAttributeValues
+      ':uid': requestUser,
+      ':from': parseInt(timeStart),
+      ':to': parseInt(timeEnd),
+    }
+
+    let filter = null
 
     if (logType) {
-      kce += 'AND logType = :ltype'
+      ean['#logtype'] = 'logType'
+      eav[':ltype'] = logType
+      filter = '#logtype = :ltype'
     }
 
     dynamoParam = {
       TableName: tableName,
       KeyConditionExpression: kce,
-      ExpressionAttributeNames: {
-        '#time': 'timestamp',
-      },
-      ExpressionAttributeValues: {
-        ':uid': requestUser,
-        ':from': start,
-        ':to': end,
-        ':ltype': logType,
-      },
+      FilterExpression: filter,
+      ExpressionAttributeNames: ean,
+      ExpressionAttributeValues: eav,
     }
+
+    console.log(dynamoParam)
 
     const data = await dq(dynamoParam)
     if (!data) {
@@ -170,7 +184,7 @@ exports.handler = async (event, context, callback) => {
       return callback(null, response)
     }
 
-    response.body = JSON.stringify(data)
+    response.body = JSON.stringify(data.Items)
     return callback(null, response)
   }
 }
