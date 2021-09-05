@@ -8,7 +8,13 @@
           <div class="field">
             <div class="ui left icon input">
               <i class="user icon"></i>
-              <input type="text" placeholder="ID" v-model="user.userId" required disabled /> 
+              <input
+                type="text"
+                placeholder="ID"
+                v-model="user.userId"
+                required
+                disabled
+              />
             </div>
           </div>
           <div class="field">
@@ -20,7 +26,11 @@
           <div class="field">
             <div class="ui left icon input">
               <i class="tag icon"></i>
-              <input type="text" placeholder="ニックネーム" v-model="user.nickName" />
+              <input
+                type="text"
+                placeholder="ニックネーム"
+                v-model="user.nickName"
+              />
             </div>
           </div>
           <div class="field">
@@ -50,8 +60,15 @@
                 <i class="male icon"></i>
                 <label>男性</label>
               </label>
-              <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="female" v-model="user.sex" />
+              <label class="radiobutton"
+                ><br />
+                <input
+                  class="gender"
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  v-model="user.sex"
+                />
               </label>
               <label class="gender">
                 <i class="female icon"></i>
@@ -68,23 +85,26 @@
         </form>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
-import Menu from '@/components/Menu.vue';
-import { baseUrl } from '@/assets/config.js';
+import Menu from "@/components/Menu.vue";
+import Footer from "@/components/Footer.vue";
+import { baseUrl } from "@/assets/config.js";
 import axios from "axios";
 
 export default {
-  name: 'Profile',
+  name: "Profile",
   components: {
     Menu,
+    Footer,
   },
   data() {
     // Vue.jsで使う変数はここに記述する
     return {
       user: {
-        userId: localStorage.getItem('userId'),
+        userId: localStorage.getItem("userId"),
         password: null,
         nickName: null,
         age: null,
@@ -96,18 +116,19 @@ export default {
     };
   },
   computed: {
-  // 計算した結果を変数として利用したいときはここに記述する
+    // 計算した結果を変数として利用したいときはここに記述する
   },
   created() {
-  // Vue.jsの読み込みが完了したときに実行する処理はここに記述する
+    // Vue.jsの読み込みが完了したときに実行する処理はここに記述する
     const token = localStorage.getItem("token");
-    if (!token) this.$router.push({name: "Login"});
+    if (!token) this.$router.push({ name: "Login" });
     const config = {
       headers: {
-        token: 'mti-2021-final',
+        token: "mti-2021-final",
       },
-    }
-    axios.get(baseUrl + "/user/profile" + "?userId=" + this.user.userId, config)
+    };
+    axios
+      .get(baseUrl + "/user/profile" + "?userId=" + this.user.userId, config)
       .then((response) => {
         // 成功したときの処理はここに記述する
         console.log(response);
@@ -115,29 +136,28 @@ export default {
       })
       .catch(() => {
         // レスポンスがエラーで返ってきたときの処理はここに記述する
-        this.err = '予期せぬエラーが発生しました';
-      }
-    );
+        this.err = "予期せぬエラーが発生しました";
+      });
   },
   methods: {
-  // Vue.jsで使う関数はここで記述する
+    // Vue.jsで使う関数はここで記述する
     submit() {
       if (!this.user.password) {
-          this.err = 'パスワードを入力してください';
-          return;
+        this.err = "パスワードを入力してください";
+        return;
       } else if (!this.user.nickName) {
-          this.err = 'ニックネームを入力してください';
-          return;
+        this.err = "ニックネームを入力してください";
+        return;
       } else if (!this.user.age) {
-          this.err = '年齢を入力してください';
-          return;
+        this.err = "年齢を入力してください";
+        return;
       } else if (!this.user.weight) {
-        this.err = '体重を入力してください';
+        this.err = "体重を入力してください";
         return;
       } else if (!this.user.height) {
-        this.err = '身長を入力してください';
+        this.err = "身長を入力してください";
         return;
-      } 
+      }
       const requestBody = {
         userId: this.user.userId,
         password: this.user.password,
@@ -145,28 +165,29 @@ export default {
         age: this.user.age,
         weight: this.user.weight,
         height: this.user.height,
-        sex: this.user.sex
+        sex: this.user.sex,
       };
       const config = {
         headers: {
-          token: 'mti-2021-final',
+          token: "mti-2021-final",
         },
-      }
-      axios.put(baseUrl + "/user/profile", requestBody, config)
+      };
+      axios
+        .put(baseUrl + "/user/profile", requestBody, config)
         .then(() => {
           // 成功したときの処理はここに記述する
-          this.$router.push({ name: 'Home'});
+          this.$router.push({ name: "Home" });
         })
         .catch((e) => {
           // レスポンスがエラーで返ってきたときの処理はここに記述する
           throw new Error(e);
         });
     },
-  }
-}
+  },
+};
 </script>
 <style scoped>
-.radiobutton{
+.radiobutton {
   margin-left: 10px;
 }
 .gender {
