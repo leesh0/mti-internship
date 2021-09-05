@@ -132,10 +132,10 @@ export default {
           this.err = '年齢を入力してください';
           return;
       } else if (!this.user.weight) {
-        this.err = "体重を入力してください";
+        this.err = '体重を入力してください';
         return;
       } else if (!this.user.height) {
-        this.err = "身長を入力してください";
+        this.err = '身長を入力してください';
         return;
       } else {
       const requestBody = {
@@ -147,7 +147,12 @@ export default {
         height: this.user.height,
         sex: this.user.sex
       };
-      axios.put(baseUrl + "/user/profile", requestBody)
+      const config = {
+        headers: {
+          token: 'mti-2021-final',
+        },
+      }
+      axios.put(baseUrl + "/user/profile", requestBody, config)
         .then(() => {
           // 成功したときの処理はここに記述する
           this.$router.push({ name: 'Home'});
@@ -158,22 +163,6 @@ export default {
         });
       }
     },
-    deleteUser() {
-      axios.delete(baseUrl + "/user", {
-        data: {
-          userId: this.user.userId
-        }
-      })
-        .then(() => {
-          // 成功したときの処理はここに記述する
-          this.$router.push({ name: 'Login'});
-        })
-        .catch((e) => {
-          // レスポンスがエラーで返ってきたときの処理はここに記述する
-          throw new Error(e);
-        }
-      );
-    }
   }
 }
 </script>
