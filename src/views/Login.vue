@@ -15,13 +15,20 @@
             <div class="ui left icon input">
               <i class="lock icon"></i>
               <input
-                type="password" placeholder="パスワード" v-model="user.password" />
+                type="password"
+                placeholder="パスワード"
+                v-model="user.password"
+              />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
               <i class="tag icon"></i>
-              <input type="text" placeholder="ニックネーム" v-model="user.nickname" />
+              <input
+                type="text"
+                placeholder="ニックネーム"
+                v-model="user.nickName"
+              />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
@@ -32,28 +39,54 @@
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
-              <!-- アイコンを追加 -->
-              <input type="text" placeholder="体重" v-model.number="user.weight" />
+              <i class="user icon"></i>
+              <input
+                type="text"
+                placeholder="体重"
+                v-model.number="user.weight"
+              />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
-              <!-- アイコンを追加 -->
-              <input type="text" placeholder="身長" v-model.number="user.height" />
+              <i class="user icon"></i>
+              <input
+                type="text"
+                placeholder="身長"
+                v-model.number="user.height"
+              />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
-            <div class="ui left icon input">
-              <div class="ui buttons">
-                <button class="ui left attached button">
-                  <i class="male icon"></i>
-                  <label>男性</label>
-                </button>
-                <button class="right attached ui button">
-                  <i class="female icon"></i>
-                  <label>女性</label>
-                </button>
-              </div>
+            <div class="ui left icon input" v-if="!isLogin">
+              <label class="radiobutton"
+                ><br />
+                <input
+                  class="gender"
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  v-model="user.sex"
+                />
+              </label>
+              <label class="gender">
+                <i class="male icon"></i>
+                <label>男性</label>
+              </label>
+              <label class="radiobutton"
+                ><br />
+                <input
+                  class="gender"
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  v-model="user.sex"
+                />
+              </label>
+              <label class="gender">
+                <i class="female icon"></i>
+                <label>女性</label>
+              </label>
             </div>
           </div>
           <li v-if="err" class="err-msg">{{ err }}</li>
@@ -70,17 +103,20 @@
         {{ toggleText }}
       </button>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
 import { baseUrl } from "@/assets/config.js";
 import axios from "axios";
 import Menu from "@/components/Menu.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "Login",
   components: {
     Menu,
+    Footer,
   },
   data() {
     // Vue.jsで使う変数はここに記述する
@@ -89,10 +125,11 @@ export default {
       user: {
         userId: null,
         password: null,
-        nickname: null,
+        nickName: null,
         age: null,
-        //weight: null,
-        //height: null,
+        weight: null,
+        height: null,
+        sex: "male",
       },
       err: null,
     };
@@ -114,6 +151,17 @@ export default {
     toggleMode() {
       this.isLogin = !this.isLogin;
     },
+    //radio button確認用スクリプト
+    /*buttonCheck() {
+      let elements = document.getElementsByName('gender');
+      if (elements.item(0).checked){
+        console.log('選択されているのは ' + elements.item(0).value + ' です');
+        return elements.item(0).value;
+      } else if(elements.item(1).checked){
+        console.log('選択されているのは ' + elements.item(1).value + ' です');
+        return elements.item(1).value;
+      }
+    },*/
     submit() {
       if (this.isLogin) {
         if (!this.user.userId) {
@@ -146,21 +194,27 @@ export default {
         this.err = "userIdを入力してください";
       } else if (!this.user.password) {
         this.err = "パスワードを入力してください";
-      } else if (!this.user.nickname) {
+      } else if (!this.user.nickName) {
         this.err = "ニックネームを入力してください";
       } else if (!this.user.age) {
         this.err = "年齢を入力してください";
-      } else { //ここにweightとheightのif文を追加
+      } else if (!this.user.weight) {
+        this.err = "体重を入力してください";
+      } else if (!this.user.height) {
+        this.err = "身長を入力してください";
+      } else {
         // APIにPOSTリクエストを送る
         const requestBody = {
           userId: this.user.userId,
           password: this.user.password,
-          nickname: this.user.nickname,
+          nickName: this.user.nickName,
           age: this.user.age,
-          //ここにweightとheightのif文を追加
+          weight: this.user.weight,
+          height: this.user.height,
+          sex: this.user.sex,
         };
         axios
-          .post(baseUrl + "/user/signup", requestBody)
+          .post(baseUrl + "/user/register", requestBody)
           .then((response) => {
             // 成功したときの処理はここに記述する
             localStorage.setItem("token", response.data.token);
@@ -176,4 +230,12 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.radiobutton {
+  margin-left: 10px;
+}
+.gender {
+  margin-left: 5px;
+  margin-top: 24px;
+}
+</style>
