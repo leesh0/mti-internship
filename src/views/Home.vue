@@ -4,7 +4,10 @@
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
-        <h2>テストユーザー さん</h2>
+        <h2>{{ userData.nickName }} さん</h2>
+        <p v-if="userData.sex === 'male'"><i class="female icon"></i>女性</p>
+        <p v-else><i class="male icon"></i>男性</p>
+        <p>{{ userData.age }} 歳</p>
         <!--  -->
         <div class="ui grid">
           <div class="ten wide column">
@@ -13,24 +16,16 @@
                 <tr>
                   <th>項目</th>
                   <th>現在の数値</th>
-                  <th>目標数値まで</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td data-label="Name">体重</td>
-                  <td data-label="Age">55Kg</td>
-                  <td data-label="Job">-5Kg</td>
+                  <td data-label="Age">{{ userData.weight }} Kg</td>
                 </tr>
                 <tr>
                   <td data-label="Name">身長</td>
-                  <td data-label="Age">150Kg</td>
-                  <td data-label="Job">+3cm</td>
-                </tr>
-                <tr>
-                  <td data-label="Name">ウエスト</td>
-                  <td data-label="Age">60cm</td>
-                  <td data-label="Job">-5cm</td>
+                  <td data-label="Age">{{ userData.height }} cm</td>
                 </tr>
               </tbody>
             </table>
@@ -114,6 +109,7 @@
         </div>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -125,6 +121,7 @@
 // import something from '@/components/something.vue';
 import { baseUrl } from "@/assets/config.js";
 import Menu from "@/components/Menu.vue";
+import Footer from "@/components/Footer.vue";
 import Chart from "@/components/Chart.vue";
 import axios from "axios";
 
@@ -133,6 +130,7 @@ export default {
   components: {
     // 読み込んだコンポーネント名をここに記述する
     Menu,
+    Footer,
     Chart,
   },
   data() {
@@ -154,7 +152,7 @@ export default {
         start: null,
         end: null,
       },
-      articles: [],
+      userData: [],
       iam: null,
     };
   },
@@ -175,9 +173,26 @@ export default {
     const token = localStorage.getItem("token");
     if (!token) this.$router.push({ name: "Login" });
 
-    this.iam = localStorage.getItem("userId");
-    // apiからarticleを取得する
-    this.getArticles();
+    // this.iam = localStorage.getItem("userId");
+    // // apiからarticleを取得する
+    // this.getArticles();
+    const auth_token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("userId");
+    axios
+      .get(baseUrl + "/user/profile?userId=" + user_id, {
+        headers: {
+          token: auth_token,
+        },
+      })
+      .then((response) => {
+        // 成功したときの処理はここに記述する
+        console.log(response.data.data);
+        this.userData = response.data.data;
+      })
+      .catch((err) => {
+        // レスポンスがエラーで返ってきたときの処理はここに記述する
+        console.log(err);
+      });
   },
   methods: {
     // Vue.jsで使う関数はここで記述する
