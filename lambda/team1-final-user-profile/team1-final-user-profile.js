@@ -39,7 +39,7 @@ exports.handler = async (event, context, callback) => {
   const requestMethod = requestContext.http.method
   const requestToken = event.headers.token
   const requestParams = event.queryStringParameters
-  const requestBody = JSON.parse(event.body)
+  const requestBody = JSON.parse(event.body ? event.body : '{}')
   const requestUser =
     requestParams?.userId === undefined
       ? requestBody.userId
