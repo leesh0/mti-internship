@@ -8,19 +8,29 @@
           <div class="field">
             <div class="ui left icon input">
               <i class="user icon"></i>
-              <input type="text" placeholder="ID" v-model="user.userId" required disabled /> 
+              <input
+                type="text"
+                placeholder="ID"
+                v-model="user.userId"
+                required
+                disabled
+              />
             </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
               <i class="lock icon"></i>
-              <input type="text" placeholder="パスワード" v-model="user.password" />
+              <input type="password" placeholder="パスワード" v-model="user.password" />
             </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
               <i class="tag icon"></i>
-              <input type="text" placeholder="ニックネーム" v-model="user.nickName" />
+              <input
+                type="text"
+                placeholder="ニックネーム"
+                v-model="user.nickName"
+              />
             </div>
           </div>
           <div class="field">
@@ -29,29 +39,36 @@
               <input type="text" placeholder="年齢" v-model.number="user.age" />
             </div>
           </div>
-          <div class="field" v-if="!isLogin">
+          <div class="field">
             <div class="ui left icon input">
-              <!-- アイコンを追加 -->
+              <i class="user icon"></i>
               <input type="text" placeholder="体重" v-model.number="user.weight" />
             </div>
           </div>
-          <div class="field" v-if="!isLogin">
+          <div class="field">
             <div class="ui left icon input">
-              <!-- アイコンを追加 -->
+              <i class="user icon"></i>
               <input type="text" placeholder="身長" v-model.number="user.height" />
             </div>
           </div>
            <div class="field">
-            <div class="ui left icon input" v-if="!isLogin">
+            <div class="ui left icon input">
               <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="male" v-model="user.sex" checked/>
+                <input class="gender" type="radio" name="gender" value="male" v-model="user.sex" />
               </label>
               <label class="gender">
                 <i class="male icon"></i>
                 <label>男性</label>
               </label>
-              <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="female" v-model="user.sex"/>
+              <label class="radiobutton"
+                ><br />
+                <input
+                  class="gender"
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  v-model="user.sex"
+                />
               </label>
               <label class="gender">
                 <i class="female icon"></i>
@@ -67,27 +84,27 @@
           </button>
         </form>
       </div>
-      <button @click="deleteUser" class="ui huge grey fluid button" type="submit">
-        退会
-      </button>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
-import Menu from '@/components/Menu.vue';
-import { baseUrl } from '@/assets/config.js';
+import Menu from "@/components/Menu.vue";
+import Footer from "@/components/Footer.vue";
+import { baseUrl } from "@/assets/config.js";
 import axios from "axios";
 
 export default {
-  name: 'Profile',
+  name: "Profile",
   components: {
     Menu,
+    Footer,
   },
   data() {
     // Vue.jsで使う変数はここに記述する
     return {
       user: {
-        userId: localStorage.getItem('userId'),
+        userId: localStorage.getItem("userId"),
         password: null,
         nickName: null,
         age: null,
@@ -99,49 +116,48 @@ export default {
     };
   },
   computed: {
-  // 計算した結果を変数として利用したいときはここに記述する
+    // 計算した結果を変数として利用したいときはここに記述する
   },
   created() {
-  // Vue.jsの読み込みが完了したときに実行する処理はここに記述する
+    // Vue.jsの読み込みが完了したときに実行する処理はここに記述する
     const token = localStorage.getItem("token");
-    if (!token) this.$router.push({name: "Login"});
-
-    axios.get(baseUrl + "/user" + "?userId=" + this.user.userId)
+    if (!token) this.$router.push({ name: "Login" });
+    const config = {
+      headers: {
+        token: "mti-2021-final",
+      },
+    };
+    axios
+      .get(baseUrl + "/user/profile" + "?userId=" + this.user.userId, config)
       .then((response) => {
         // 成功したときの処理はここに記述する
         console.log(response);
-        this.user.nickName = response.data.nickName;
-        this.user.age = response.data.age;
+        this.user = response.data.data;
       })
       .catch(() => {
         // レスポンスがエラーで返ってきたときの処理はここに記述する
-        this.err = '予期せぬエラーが発生しました';
-      }
-    );
+        this.err = "予期せぬエラーが発生しました";
+      });
   },
   methods: {
-  // Vue.jsで使う関数はここで記述する
+    // Vue.jsで使う関数はここで記述する
     submit() {
-      let elements = document.getElementsByName('gender'); //radiobuttonの変更を変数に代入
       if (!this.user.password) {
-          this.err = 'パスワードを入力してください';
-          return;
+        this.err = "パスワードを入力してください";
+        return;
       } else if (!this.user.nickName) {
-          this.err = 'ニックネームを入力してください';
-          return;
+        this.err = "ニックネームを入力してください";
+        return;
       } else if (!this.user.age) {
-          this.err = '年齢を入力してください';
-          return;
+        this.err = "年齢を入力してください";
+        return;
       } else if (!this.user.weight) {
         this.err = "体重を入力してください";
         return;
       } else if (!this.user.height) {
         this.err = "身長を入力してください";
         return;
-      } else if (!elements.item(0).checked && !elements.item(1).checked) {
-        this.err = "性別を選択してください";
-        return;
-      } 
+      }
       const requestBody = {
         userId: this.user.userId,
         password: this.user.password,
@@ -149,40 +165,29 @@ export default {
         age: this.user.age,
         weight: this.user.weight,
         height: this.user.height,
-        sex: this.user.sex
+        sex: this.user.sex,
       };
-      axios.put(baseUrl + "/user", requestBody)
+      const config = {
+        headers: {
+          token: "mti-2021-final",
+        },
+      };
+      axios
+        .put(baseUrl + "/user/profile", requestBody, config)
         .then(() => {
           // 成功したときの処理はここに記述する
-          this.$router.push({ name: 'Home'});
+          this.$router.push({ name: "Home" });
         })
         .catch((e) => {
           // レスポンスがエラーで返ってきたときの処理はここに記述する
           throw new Error(e);
-        }
-      );
+        });
     },
-    deleteUser() {
-      axios.delete(baseUrl + "/user", {
-        data: {
-          userId: this.user.userId
-        }
-      })
-        .then(() => {
-          // 成功したときの処理はここに記述する
-          this.$router.push({ name: 'Login'});
-        })
-        .catch((e) => {
-          // レスポンスがエラーで返ってきたときの処理はここに記述する
-          throw new Error(e);
-        }
-      );
-    }
-  }
-}
+  },
+};
 </script>
 <style scoped>
-.radiobutton{
+.radiobutton {
   margin-left: 10px;
 }
 .gender {
