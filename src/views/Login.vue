@@ -45,14 +45,14 @@
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input" v-if="!isLogin">
               <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="male" checked/>
+                <input class="gender" type="radio" name="gender" value="male" v-model="user.sex" />
               </label>
               <label class="gender">
                 <i class="male icon"></i>
                 <label>男性</label>
               </label>
               <label class="radiobutton"><br>
-                <input class="gender" type="radio" name="gender" value="female" />
+                <input class="gender" type="radio" name="gender" value="female" v-model="user.sex" />
               </label>
               <label class="gender">
                 <i class="female icon"></i>
@@ -93,7 +93,7 @@ export default {
         age: null,
         weight: null,
         height: null,
-        sex: null,
+        sex: "male",
       },
       err: null,
     };
@@ -127,12 +127,6 @@ export default {
       }
     },*/
     submit() {
-      let elements = document.getElementsByName('gender'); //radiobuttonの変更を変数に代入
-      if (elements.item(0).checked) {
-        this.user.sex = "male";
-      } else if (elements.item(1).checked){
-        this.user.sex = "female";
-      }
       if (this.isLogin) {
         if (!this.user.userId) {
           this.err = "userIdを入力してください";
