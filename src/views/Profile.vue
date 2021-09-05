@@ -67,9 +67,6 @@
           </button>
         </form>
       </div>
-      <button @click="deleteUser" class="ui huge grey fluid button" type="submit">
-        退会
-      </button>
     </div>
   </div>
 </template>
@@ -105,13 +102,16 @@ export default {
   // Vue.jsの読み込みが完了したときに実行する処理はここに記述する
     const token = localStorage.getItem("token");
     if (!token) this.$router.push({name: "Login"});
-
-    axios.get(baseUrl + "/user/profile" + "?userId=" + this.user.userId)
+    const config = {
+      headers: {
+        token: 'mti-2021-final',
+      },
+    }
+    axios.get(baseUrl + "/user/profile" + "?userId=" + this.user.userId, config)
       .then((response) => {
         // 成功したときの処理はここに記述する
         console.log(response);
-        this.user.nickName = response.data.nickName;
-        this.user.age = response.data.age;
+        this.user = response.data.data;
       })
       .catch(() => {
         // レスポンスがエラーで返ってきたときの処理はここに記述する
