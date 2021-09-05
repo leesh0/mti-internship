@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menu current="user"></Menu>
+    <Menu current="food"></Menu>
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
