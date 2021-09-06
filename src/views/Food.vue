@@ -1,8 +1,8 @@
 <template>
-  <div 
+  <div
     style="position: relative;
            padding-bottom: 30px;"
-    >
+  >
     <Menu current="food"></Menu>
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
@@ -253,6 +253,7 @@
               </div>
               <button
                 class="ui primary button tiny ml-5"
+                type="button"
                 v-on:click="submit(data.item.id)"
               >
                 記録
