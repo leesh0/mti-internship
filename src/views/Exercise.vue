@@ -46,22 +46,22 @@
             <div class="field">
               <label>行った運動を選択してください。</label>
             </div>
+
             <div class="ui grid">
-              <div class="four wide column">
+              <div v-for="e in data" :key="e" class="four wide column">
+                <!---->
                 <div class="ui card">
                   <div class="content">
                     <h2 class="ui header">
                       <div class="sub header">
-                        筋トレ
+                        <h3>{{ e.name }}</h3>
                       </div>
-                      腕立て
-                      <div class="sub header">
-                        カロリー : 132kcal 回数: 15 × 3
-                      </div>
+                      <div class="sub header">METs:{{ e.mets }}</div>
                     </h2>
                     <button class="fluid ui green button">check</button>
                   </div>
                 </div>
+                <!---->
               </div>
             </div>
           </form>
@@ -72,20 +72,21 @@
   </div>
 </template>
 <script>
-import Menu from "@/components/Menu.vue";
-import Footer from "@/components/Footer.vue";
-import { baseUrl } from "@/assets/config.js";
-import axios from "axios";
-import Chart from "@/components/Chart.vue";
+import Menu from '@/components/Menu.vue';
+import Footer from '@/components/Footer.vue';
+import { baseUrl } from '@/assets/config.js';
+import axios from 'axios';
+import Chart from '@/components/Chart.vue';
+import { data } from '@/utils/exercise.js';
 export default {
-  name: "Exercise",
+  name: 'Exercise',
   components: {
     Menu,
     Chart,
     Footer,
   },
   data() {
-    return {};
+    return { data };
   },
   computed: {
     // 計算した結果を変数として利用したいときはここに記述する
@@ -115,10 +116,10 @@ export default {
   },
   created() {
     // Vue.jsの読み込みが完了したときに実行する処理はここに記述する
-    const token = localStorage.getItem("token");
-    if (!token) this.$router.push({ name: "Login" });
+    const token = localStorage.getItem('token');
+    if (!token) this.$router.push({ name: 'Login' });
     axios
-      .get(baseUrl + "/users")
+      .get(baseUrl + '/users')
       .then((response) => {
         // 成功したときの処理はここに記述する
         this.users = response.data.users;
