@@ -42,7 +42,7 @@
       </div>
       <div class="ui segment">
         <h2>カロリー摂取・消費状況</h2>
-        <ChartFoodCal />
+        <Chart />
         <div class="ui message">
           <div class="header">アドバイス</div>
           <div class="ui comments">
@@ -62,7 +62,7 @@
           </div>
         </div>
         <h2>栄養摂取状況</h2>
-        <ChartFood />
+        <ChartFoodCal />
         <div class="ui message">
           <div class="header">アドバイス</div>
           <div class="ui comments">
@@ -100,7 +100,7 @@
           <span class="today"
             >{{ new Date().getMonth() + 1 }}月{{ new Date().getDate() }}日</span
           >
-          に摂った食事を記録してください。
+          に摂った食事を記録してください。食べた時間も入力してください。
         </p>
       </div>
       <div v-show="foodData.length === 0" class="ui segments">
@@ -167,7 +167,7 @@
 <script>
 import Menu from "@/components/Menu.vue";
 import Footer from "@/components/Footer.vue";
-import ChartFood from "@/components/ChartFood.vue";
+import Chart from "@/components/Chart.vue";
 import ChartFoodCal from "@/components/ChartFoodCal.vue";
 import { baseUrl } from "@/assets/config.js";
 import axios from "axios";
@@ -177,7 +177,7 @@ export default {
   components: {
     Menu,
     Footer,
-    ChartFood,
+    Chart,
     ChartFoodCal,
   },
   data() {
