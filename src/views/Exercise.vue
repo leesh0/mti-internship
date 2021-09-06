@@ -1,8 +1,8 @@
 <template>
-  <div 
+  <div
     style="position: relative;
            padding-bottom: 30px;"
-    >
+  >
     <Menu current="exercise"></Menu>
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
@@ -73,6 +73,7 @@
 </template>
 <script>
 import Menu from "@/components/Menu.vue";
+import Footer from "@/components/Footer.vue";
 import { baseUrl } from "@/assets/config.js";
 import axios from "axios";
 import Chart from "@/components/Chart.vue";
@@ -81,6 +82,7 @@ export default {
   components: {
     Menu,
     Chart,
+    Footer,
   },
   data() {
     return {};
