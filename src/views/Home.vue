@@ -99,14 +99,49 @@
                   <a class="author">食のアドバイザー</a>
                   <div class="text">
                     {{ bmi.bmiMessageFood }}
-                    <ul>
-                      <li>
-                        <h3>サラダ</h3>
-                      </li>
-                      <li>
-                        <h3>うどん</h3>
-                      </li>
-                    </ul>
+                    <div class="ui card">
+                      <div class="content">
+                        <h2 class="ui header">
+                          朝食
+                          <div class="sub header">
+                            <div class="ui middle aligned divided list">
+                              <div class="item">
+                                <div class="right floated content">
+                                  0カロリー
+                                </div>
+                                <div class="content">
+                                  ごはん
+                                </div>
+                              </div>
+                              <div class="item">
+                                <div class="right floated content">
+                                  0カロリー
+                                </div>
+                                <div class="content">
+                                  豚の生姜焼き
+                                </div>
+                              </div>
+                              <div class="item">
+                                <div class="right floated content">
+                                  0カロリー
+                                </div>
+                                <div class="content">
+                                  サラダ
+                                </div>
+                              </div>
+                              <div class="item">
+                                <div class="right floated content">
+                                  0カロリー
+                                </div>
+                                <div class="content">
+                                  卵スープ
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </h2>
+                      </div>
+                    </div>
                     <a
                       @click="switchPage('Food')"
                       style="cursor: hand; cursor:pointer;"

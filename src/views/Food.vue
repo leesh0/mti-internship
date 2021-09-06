@@ -4,6 +4,146 @@
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
+        <h2>食事メニューの提案</h2>
+        <div class="ui grid centered">
+          <div class="five wide column">
+            <div class="ui card">
+              <div class="content">
+                <h2 class="ui header">
+                  朝食
+                  <div class="sub header">
+                    <div class="ui middle aligned divided list">
+                      <div class="item">
+                        <div class="right floated content">
+                          0カロリー
+                        </div>
+                        <div class="content">
+                          ごはん
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="right floated content">
+                          0カロリー
+                        </div>
+                        <div class="content">
+                          豚の生姜焼き
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="right floated content">
+                          0カロリー
+                        </div>
+                        <div class="content">
+                          サラダ
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="right floated content">
+                          0カロリー
+                        </div>
+                        <div class="content">
+                          卵スープ
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div class="five wide column">
+            <div class="ui card">
+              <div class="content">
+                <h2 class="ui header">
+                  昼食
+                  <div class="sub header">
+                    <div class="ui middle aligned divided list">
+                      <div class="item">
+                        <div class="right floated content">
+                          0カロリー
+                        </div>
+                        <div class="content">
+                          ごはん
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="right floated content">
+                          0カロリー
+                        </div>
+                        <div class="content">
+                          豚の生姜焼き
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="right floated content">
+                          0カロリー
+                        </div>
+                        <div class="content">
+                          サラダ
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="right floated content">
+                          0カロリー
+                        </div>
+                        <div class="content">
+                          卵スープ
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div class="five wide column">
+            <div class="ui card">
+              <div class="content">
+                <h2 class="ui header">
+                  夕食
+                  <div class="sub header">
+                    <div class="ui middle aligned divided list">
+                      <div class="item">
+                        <div class="right floated content">
+                          0カロリー
+                        </div>
+                        <div class="content">
+                          ごはん
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="right floated content">
+                          0カロリー
+                        </div>
+                        <div class="content">
+                          豚の生姜焼き
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="right floated content">
+                          0カロリー
+                        </div>
+                        <div class="content">
+                          サラダ
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="right floated content">
+                          0カロリー
+                        </div>
+                        <div class="content">
+                          卵スープ
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui segment">
         <h2>カロリー摂取・消費状況</h2>
         <ChartFoodCal />
         <div class="ui message">
