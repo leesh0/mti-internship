@@ -5,7 +5,6 @@
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
         <h2>{{ userData.nickName }} さん</h2>
-        <!--  -->
         <div class="ui grid">
           <div class="ten wide column">
             <table class="ui celled table">
@@ -79,21 +78,8 @@
                             メッツ:3.8
                           </div>
                         </h2>
-                        <!--
-                        <button class="fluid ui green button">check</button>
-                        -->
                       </div>
                     </div>
-                    <!--
-                    <ul>
-                      <li>
-                        <h3>ウォーキング</h3>
-                      </li>
-                      <li>
-                        <h3>スクワット</h3>
-                      </li>
-                    </ul>
-                    -->
                     <a
                       @click="switchPage('Exercise')"
                       style="cursor: hand; cursor:pointer;"
