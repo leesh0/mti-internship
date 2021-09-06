@@ -326,28 +326,7 @@ export default {
         .then((response) => {
           // 成功したときの処理はここに記述する
           window.alert("記録しました。");
-          // でバック用
-          window.alert(
-            "料理名 : " +
-              foodName +
-              "\nID:" +
-              foodId +
-              "\n食べた量(g) : " +
-              eated +
-              "\n" +
-              "食べた時間 : " +
-              UnixTimestamp +
-              "\n栄養素\n" +
-              " p:" +
-              p +
-              " c:" +
-              c +
-              " f:" +
-              f +
-              "kcal" +
-              kcal +
-              "  を記録"
-          );
+
           console.log(response);
         })
         .catch((err) => {
