@@ -1,5 +1,5 @@
 <template>
-  <div class="ui secondary pointing green inverted massive menu">
+  <div class="ui top fixed secondary pointing green inverted massive menu">
     <a
       class="item"
       @click="switchPage('Home')"
