@@ -107,7 +107,7 @@
                             <div class="ui middle aligned divided list">
                               <div class="item">
                                 <div class="right floated content">
-                                  0カロリー
+                                  0<span class="cardKcal"> Kcal</span>
                                 </div>
                                 <div class="content">
                                   ごはん
@@ -115,7 +115,7 @@
                               </div>
                               <div class="item">
                                 <div class="right floated content">
-                                  0カロリー
+                                  0<span class="cardKcal"> Kcal</span>
                                 </div>
                                 <div class="content">
                                   豚の生姜焼き
@@ -123,7 +123,7 @@
                               </div>
                               <div class="item">
                                 <div class="right floated content">
-                                  0カロリー
+                                  0<span class="cardKcal"> Kcal</span>
                                 </div>
                                 <div class="content">
                                   サラダ
@@ -131,7 +131,7 @@
                               </div>
                               <div class="item">
                                 <div class="right floated content">
-                                  0カロリー
+                                  0<span class="cardKcal"> Kcal</span>
                                 </div>
                                 <div class="content">
                                   卵スープ
@@ -435,5 +435,8 @@ export default {
 }
 .comment {
   font-size: 120%;
+}
+.cardKcal {
+  font-size: 70%;
 }
 </style>
