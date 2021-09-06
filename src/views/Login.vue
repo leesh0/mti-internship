@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding-top: 50px">
     <Menu></Menu>
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
@@ -39,7 +39,7 @@
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
-              <i class="user icon"></i>
+              <i class="user outline icon"></i>
               <input
                 type="text"
                 placeholder="体重"
@@ -49,7 +49,7 @@
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
-              <i class="user icon"></i>
+              <i class="user outline icon"></i>
               <input
                 type="text"
                 placeholder="身長"
@@ -89,7 +89,22 @@
               </label>
             </div>
           </div>
-          <li v-if="err" class="err-msg">{{ err }}</li>
+          <div class="ui red message" v-if="(isLogin&&(!user.userId||!user.password))&&err">
+            <ul class="list">
+              <li v-if="!user.userId" class="err-msg">userIdを入力してください</li>
+              <li v-if="!user.password" class="err-msg">パスワードを入力してください</li>
+            </ul>
+          </div>
+          <div class="ui red message" v-if="(!isLogin&&(!user.userId||!user.password||!user.nickName||!user.age||!user.weight||!user.height))&&err">
+            <ul class="list">
+              <li v-if="!user.userId" class="err-msg">userIdを入力してください</li>
+              <li v-if="!user.password" class="err-msg">パスワードを入力してください</li>
+              <li v-if="!user.nickName" class="err-msg">ニックネームを入力してください</li>
+              <li v-if="!user.age" class="err-msg">年齢を入力してください</li>
+              <li v-if="!user.weight" class="err-msg">体重を入力してください</li>
+              <li v-if="!user.height" class="err-msg">身長を入力してください</li>
+            </ul>
+          </div>
           <button class="ui huge green fluid button" type="submit">
             {{ submitText }}
           </button>
@@ -151,17 +166,9 @@ export default {
     toggleMode() {
       this.isLogin = !this.isLogin;
     },
-    //radio button確認用スクリプト
-    /*buttonCheck() {
-      let elements = document.getElementsByName('gender');
-      if (elements.item(0).checked){
-        console.log('選択されているのは ' + elements.item(0).value + ' です');
-        return elements.item(0).value;
-      } else if(elements.item(1).checked){
-        console.log('選択されているのは ' + elements.item(1).value + ' です');
-        return elements.item(1).value;
-      }
-    },*/
+    errMessage() {
+
+    },
     submit() {
       if (this.isLogin) {
         if (!this.user.userId) {

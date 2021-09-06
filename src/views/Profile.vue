@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding-top: 50px">
     <Menu current="profile"></Menu>
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
@@ -45,21 +45,21 @@
           </div>
           <div class="field">
             <div class="ui left icon input">
-              <i class="user icon"></i>
-              <input
-                type="text"
-                placeholder="体重"
-                v-model.number="user.weight"
+              <i class="user outline icon"></i>
+              <input 
+                type="text" 
+                placeholder="体重" 
+                v-model.number="user.weight" 
               />
             </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
-              <i class="user icon"></i>
-              <input
-                type="text"
-                placeholder="身長"
-                v-model.number="user.height"
+              <i class="user outline icon"></i>
+              <input 
+                type="text" 
+                placeholder="身長" 
+                v-model.number="user.height" 
               />
             </div>
           </div>
@@ -95,9 +95,16 @@
               </label>
             </div>
           </div>
-          <template v-if="err">
-            <li class="err-msg">{{ err }}</li>
-          </template>
+          <div class="ui red message" v-if="(!user.userId||!user.password||!user.nickName||!user.age||!user.weight||!user.height)&&err">
+            <ul class="list">
+              <li v-if="!user.userId" class="err-msg">userIdを入力してください</li>
+              <li v-if="!user.password" class="err-msg">パスワードを入力してください</li>
+              <li v-if="!user.nickName" class="err-msg">ニックネームを入力してください</li>
+              <li v-if="!user.age" class="err-msg">年齢を入力してください</li>
+              <li v-if="!user.weight" class="err-msg">体重を入力してください</li>
+              <li v-if="!user.height" class="err-msg">身長を入力してください</li>
+            </ul>
+          </div>
           <button class="ui huge green fluid button" type="submit">
             更新
           </button>
