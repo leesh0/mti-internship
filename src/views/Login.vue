@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding-top: 50px">
     <Menu></Menu>
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
@@ -47,7 +47,7 @@
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
-              <i class="user icon"></i>
+              <i class="user outline icon"></i>
               <input
                 type="text"
                 placeholder="体重"
@@ -57,7 +57,7 @@
           </div>
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
-              <i class="user icon"></i>
+              <i class="user outline icon"></i>
               <input
                 type="text"
                 placeholder="身長"
@@ -97,7 +97,11 @@
               </label>
             </div>
           </div>
-          <li v-if="err" class="err-msg">{{ err }}</li>
+          <div class="ui red message" v-if="err">
+            <ul class="list">
+              <li v-if="err" class="err-msg">{{ err }}</li>
+            </ul>
+          </div>
           <button class="ui huge green fluid button" type="submit">
             {{ submitText }}
           </button>
