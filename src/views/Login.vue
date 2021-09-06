@@ -177,17 +177,6 @@ export default {
     errMessage() {
 
     },
-    //radio button確認用スクリプト
-    /*buttonCheck() {
-      let elements = document.getElementsByName('gender');
-      if (elements.item(0).checked){
-        console.log('選択されているのは ' + elements.item(0).value + ' です');
-        return elements.item(0).value;
-      } else if(elements.item(1).checked){
-        console.log('選択されているのは ' + elements.item(1).value + ' です');
-        return elements.item(1).value;
-      }
-    },*/
     submit() {
       if (this.isLogin) {
         if (!this.user.userId) {
