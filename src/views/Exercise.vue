@@ -57,13 +57,19 @@
                     </h2>
                     <div class="selectTime">
                       <label for="fruit">取り組んだ時間</label>
-                      <select class="ui search dropdown">
+                      <select class="ui search dropdown" :id="e.name">
                         <option :value="n * 5" v-for="n of 12" :key="n"
                           >{{ n * 5 }} 分</option
                         >
                       </select>
                     </div>
-                    <button class="fluid ui green button">check</button>
+                    <button
+                      class="fluid ui green button"
+                      type="button"
+                      v-on:click="submit(e.name, e.mets)"
+                    >
+                      記録
+                    </button>
                   </div>
                 </div>
                 <!---->
@@ -136,10 +142,36 @@ export default {
   methods: {
     // Vue.jsで使う関数はここで記述する
     // METs × 体重（kg × 時間 × 1.05 ＝ 消費カロリー（kcal
-    submit(exerciseName) {
-      const weight = document.getElementById(exerciseName).value;
+    submit(exerciseName, mets) {
+      //const weight = document.getElementById(exerciseName).value;
+      const element = document.getElementById(exerciseName);
+      const auth_token = localStorage.getItem("token");
+      const user_id = localStorage.getItem("userId");
+      axios
+        .get(baseUrl + "/user/profile?userId=" + user_id, {
+          headers: {
+            token: auth_token,
+          },
+        })
+        .then((response) => {
+          // 成功したときの処理はここに記述する
+          console.log(response.data.data.weight);
 
-      window.alert(weight);
+          const kcal = mets * response.data.data.weight * 1.05;
+          window.alert(
+            "時間：" +
+              element.value +
+              "\nメッツ：" +
+              mets +
+              "\n消費カロリー；" +
+              kcal
+          );
+        })
+        .catch((err) => {
+          // レスポンスがエラーで返ってきたときの処理はここに記述する
+          console.log(err);
+          window.alert("エラー");
+        });
     },
   },
 };

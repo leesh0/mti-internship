@@ -8,11 +8,7 @@
           <div class="field">
             <div class="ui left icon input">
               <i class="user icon"></i>
-              <input 
-                type="text" 
-                placeholder="ID" 
-                v-model="user.userId" 
-              />
+              <input type="text" placeholder="ID" v-model="user.userId" />
             </div>
           </div>
           <div class="field">
@@ -38,11 +34,7 @@
           <div class="field" v-if="!isLogin">
             <div class="ui left icon input">
               <i class="calendar icon"></i>
-              <input 
-                type="text" 
-                placeholder="年齢" 
-                v-model.number="user.age" 
-              />
+              <input type="text" placeholder="年齢" v-model.number="user.age" />
             </div>
           </div>
           <div class="field" v-if="!isLogin">
