@@ -5,7 +5,6 @@
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
         <h2>{{ userData.nickName }} さん</h2>
-        <!--  -->
         <div class="ui grid">
           <div class="ten wide column">
             <table class="ui celled table">
@@ -68,14 +67,19 @@
                   <a class="author">エクササイズアドバイザー</a>
                   <div class="text">
                     {{ bmi.bmiMessageExercise }}
-                    <ul>
-                      <li>
-                        <h3>ウォーキング</h3>
-                      </li>
-                      <li>
-                        <h3>スクワット</h3>
-                      </li>
-                    </ul>
+                    <div class="ui card">
+                      <div class="content">
+                        <h2 class="ui header">
+                          <div class="sub header">
+                            筋トレ
+                          </div>
+                          腕立て
+                          <div class="sub header">
+                            メッツ:3.8
+                          </div>
+                        </h2>
+                      </div>
+                    </div>
                     <a
                       @click="switchPage('Exercise')"
                       style="cursor: hand; cursor:pointer;"
