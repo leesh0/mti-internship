@@ -68,6 +68,23 @@
                   <a class="author">エクササイズアドバイザー</a>
                   <div class="text">
                     {{ bmi.bmiMessageExercise }}
+                    <div class="ui card">
+                      <div class="content">
+                        <h2 class="ui header">
+                          <div class="sub header">
+                            筋トレ
+                          </div>
+                          腕立て
+                          <div class="sub header">
+                            メッツ:3.8
+                          </div>
+                        </h2>
+                        <!--
+                        <button class="fluid ui green button">check</button>
+                        -->
+                      </div>
+                    </div>
+                    <!--
                     <ul>
                       <li>
                         <h3>ウォーキング</h3>
@@ -76,6 +93,7 @@
                         <h3>スクワット</h3>
                       </li>
                     </ul>
+                    -->
                     <a
                       @click="switchPage('Exercise')"
                       style="cursor: hand; cursor:pointer;"
