@@ -20,10 +20,10 @@
           <div class="field">
             <div class="ui left icon input">
               <i class="lock icon"></i>
-              <input 
-                type="password" 
-                placeholder="パスワード" 
-                v-model="user.password" 
+              <input
+                type="password"
+                placeholder="パスワード"
+                v-model="user.password"
               />
             </div>
           </div>
@@ -40,42 +40,39 @@
           <div class="field">
             <div class="ui left icon input">
               <i class="calendar icon"></i>
-              <input 
-                type="text" 
-                placeholder="年齢" 
-                v-model.number="user.age" 
+              <input type="text" placeholder="年齢" v-model.number="user.age" />
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="user icon"></i>
+              <input
+                type="text"
+                placeholder="体重"
+                v-model.number="user.weight"
               />
             </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
               <i class="user icon"></i>
-              <input 
-                type="text" 
-                placeholder="体重" 
-                v-model.number="user.weight" 
+              <input
+                type="text"
+                placeholder="身長"
+                v-model.number="user.height"
               />
             </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
-              <i class="user icon"></i>
-              <input 
-                type="text" 
-                placeholder="身長" 
-                v-model.number="user.height" 
-              />
-            </div>
-          </div>
-           <div class="field">
-            <div class="ui left icon input">
-              <label class="radiobutton"><br>
-                <input 
-                  class="gender" 
-                  type="radio" 
-                  name="gender" 
-                  value="male" 
-                  v-model="user.sex" 
+              <label class="radiobutton"
+                ><br />
+                <input
+                  class="gender"
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  v-model="user.sex"
                 />
               </label>
               <label class="gender">

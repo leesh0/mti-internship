@@ -5,21 +5,19 @@
 </template>
 <script>
 export default {
-  name: 'Template',
+  name: "Template",
   data() {
-  // Vue.jsで使う変数はここに記述する
-    return {
-    };
+    // Vue.jsで使う変数はここに記述する
+    return {};
   },
   computed: {
-  // 計算した結果を変数として利用したいときはここに記述する
+    // 計算した結果を変数として利用したいときはここに記述する
   },
   methods: {
-  // Vue.jsで使う関数はここで記述する
+    // Vue.jsで使う関数はここで記述する
   },
-  created() {
-  }
-}
+  created() {},
+};
 </script>
 <style scoped>
 /* このコンポーネントだけに適用するCSSは */

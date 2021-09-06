@@ -1,8 +1,8 @@
 <template>
-  <div 
+  <div
     style="position: relative;
            padding-bottom: 30px;"
-    >
+  >
     <Menu current="home"></Menu>
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
