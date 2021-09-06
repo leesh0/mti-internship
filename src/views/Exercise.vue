@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div 
+    style="position: relative;
+           padding-bottom: 30px;"
+    >
     <Menu current="exercise"></Menu>
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
@@ -65,6 +68,7 @@
         </div>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 <script>
