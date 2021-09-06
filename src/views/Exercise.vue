@@ -1,5 +1,8 @@
 <template>
-  <div class="topsetting">
+  <div
+    style="position: relative;
+           padding-bottom: 30px;"
+  >
     <Menu current="exercise"></Menu>
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
@@ -53,8 +56,16 @@
                       <div class="sub header">
                         <h3>{{ e.name }}</h3>
                       </div>
-                      <div class="sub header">METs:{{ e.mets }}</div>
+                      <div class="sub header">メッツ:{{ e.mets }}</div>
                     </h2>
+                    <div class="selectTime">
+                      <label for="fruit">取り組んだ時間</label>
+                      <select class="ui search dropdown">
+                        <option :value="n * 5" v-for="n of 12" :key="n"
+                          >{{ n * 5 }} 分</option
+                        >
+                      </select>
+                    </div>
                     <button class="fluid ui green button">check</button>
                   </div>
                 </div>
@@ -69,14 +80,14 @@
   </div>
 </template>
 <script>
-import Menu from '@/components/Menu.vue';
-import Footer from '@/components/Footer.vue';
-import { baseUrl } from '@/assets/config.js';
-import axios from 'axios';
-import Chart from '@/components/Chart.vue';
-import { data } from '@/utils/exercise.js';
+import Menu from "@/components/Menu.vue";
+import Footer from "@/components/Footer.vue";
+import { baseUrl } from "@/assets/config.js";
+import axios from "axios";
+import Chart from "@/components/Chart.vue";
+import { data } from "@/utils/exercise.js";
 export default {
-  name: 'Exercise',
+  name: "Exercise",
   components: {
     Menu,
     Chart,
@@ -113,10 +124,10 @@ export default {
   },
   created() {
     // Vue.jsの読み込みが完了したときに実行する処理はここに記述する
-    const token = localStorage.getItem('token');
-    if (!token) this.$router.push({ name: 'Login' });
+    const token = localStorage.getItem("token");
+    if (!token) this.$router.push({ name: "Login" });
     axios
-      .get(baseUrl + '/users')
+      .get(baseUrl + "/users")
       .then((response) => {
         // 成功したときの処理はここに記述する
         this.users = response.data.users;
@@ -127,7 +138,18 @@ export default {
   },
   methods: {
     // Vue.jsで使う関数はここで記述する
+    // METs × 体重（kg × 時間 × 1.05 ＝ 消費カロリー（kcal
+    submit(exerciseName) {
+      const weight = document.getElementById(exerciseName).value;
+
+      window.alert(weight);
+    },
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.selectTime {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+</style>
