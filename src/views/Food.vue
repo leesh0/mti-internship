@@ -4,135 +4,49 @@
     <div class="ui main container">
       <!-- 基本的なコンテンツはここに記載する -->
       <div class="ui segment">
+        <!-- 食事メニューの提案はバックエンドと調整中 -->
         <h2>食事メニューの提案</h2>
         <div class="ui grid centered">
-          <div class="five wide column">
+          <div
+            class="five wide column"
+            v-for="(suggestionData, index) in suggestionFoods"
+            :key="index"
+          >
             <div class="ui card">
               <div class="content">
                 <h2 class="ui header">
-                  朝食
-                  <div class="sub header">
-                    <div class="ui middle aligned divided list">
-                      <div class="item">
-                        <div class="right floated content">
-                          0<span class="cardKcal"> Kcal</span>
-                        </div>
-                        <div class="content">
-                          ごはん
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          0<span class="cardKcal"> Kcal</span>
-                        </div>
-                        <div class="content">
-                          豚の生姜焼き
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          0<span class="cardKcal"> Kcal</span>
-                        </div>
-                        <div class="content">
-                          サラダ
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          0<span class="cardKcal"> Kcal</span>
-                        </div>
-                        <div class="content">
-                          卵スープ
-                        </div>
-                      </div>
-                    </div>
+                  <div v-if="index === 0">
+                    朝食
                   </div>
-                </h2>
-              </div>
-            </div>
-          </div>
-          <div class="five wide column">
-            <div class="ui card">
-              <div class="content">
-                <h2 class="ui header">
-                  昼食
-                  <div class="sub header">
-                    <div class="ui middle aligned divided list">
-                      <div class="item">
-                        <div class="right floated content">
-                          0<span class="cardKcal"> Kcal</span>
-                        </div>
-                        <div class="content">
-                          ごはん
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          0<span class="cardKcal"> Kcal</span>
-                        </div>
-                        <div class="content">
-                          豚の生姜焼き
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          0<span class="cardKcal"> Kcal</span>
-                        </div>
-                        <div class="content">
-                          サラダ
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          0<span class="cardKcal"> Kcal</span>
-                        </div>
-                        <div class="content">
-                          卵スープ
-                        </div>
-                      </div>
-                    </div>
+                  <div v-if="index === 1">
+                    昼食
                   </div>
-                </h2>
-              </div>
-            </div>
-          </div>
-          <div class="five wide column">
-            <div class="ui card">
-              <div class="content">
-                <h2 class="ui header">
-                  夕食
+                  <div v-if="index === 2">
+                    夕食
+                  </div>
                   <div class="sub header">
                     <div class="ui middle aligned divided list">
                       <div class="item">
-                        <div class="right floated content">
-                          0<span class="cardKcal"> Kcal</span>
-                        </div>
                         <div class="content">
-                          ごはん
+                          <!-- {{ suggestionData.details.foods.name }} -->
                         </div>
                       </div>
                       <div class="item">
                         <div class="right floated content">
-                          0<span class="cardKcal"> Kcal</span>
+                          <!-- {{ suggestionData.details.foods[0].nutritions.kcal -->
+                          }}<span class="cardKcal"> Kcal</span>
                         </div>
                         <div class="content">
-                          豚の生姜焼き
+                          <!-- {{ suggestionData.details.foods[0].name }} -->
                         </div>
                       </div>
                       <div class="item">
                         <div class="right floated content">
-                          0<span class="cardKcal"> Kcal</span>
+                          <!-- {{ suggestionData.details.foods[1].nutritions.kcal -->
+                          }}<span class="cardKcal"> Kcal</span>
                         </div>
                         <div class="content">
-                          サラダ
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          0<span class="cardKcal"> Kcal</span>
-                        </div>
-                        <div class="content">
-                          卵スープ
+                          <!-- {{ suggestionData.details.foods[1].name }} -->
                         </div>
                       </div>
                     </div>
@@ -242,15 +156,20 @@
                 />
               </div>
               <div class="ml-5">
-                <input
-                  type="time"
-                  placeholder="食べた時間()"
-                  :id="data.item.id + 'timestamp'"
-                />
+                <input type="time" :id="data.item.id + 'timestamp'" />
               </div>
               <button
                 class="ui primary button tiny ml-5"
-                v-on:click="submit(data.item.id)"
+                v-on:click="
+                  submit(
+                    data.item.id,
+                    data.item.description,
+                    data.item.nutritional_contents.protein,
+                    data.item.nutritional_contents.carbohydrates,
+                    data.item.nutritional_contents.fat,
+                    data.item.nutritional_contents.energy.value
+                  )
+                "
               >
                 記録
               </button>
@@ -283,6 +202,7 @@ export default {
       // Vue.jsで使う変数はここに記述する
       foodData: [],
       foodName: "カレー",
+      suggestionFoods: [],
     };
   },
   computed: {
@@ -328,13 +248,43 @@ export default {
       })
       .catch((err) => {
         // レスポンスがエラーで返ってきたときの処理はここに記述する
-        window.alert("エラー");
         console.log(err);
       });
+
+    // ---献立提案API---
+    const user_id = localStorage.getItem("userId");
+
+    axios
+      .get(baseUrl + "/user/logs/meals?userId=" + user_id, {
+        headers: {
+          token: auth_token,
+        },
+      })
+      .then((response) => {
+        // window.alert(JSON.stringify(response.data));
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const date = today.getDate();
+
+        const timestamp =
+          year.toString().slice(-2) +
+          "." +
+          month.toString().padStart(2, "0") +
+          "." +
+          date.toString().padStart(2, "0");
+
+        console.log(response.data.data[timestamp].meals);
+        this.suggestionFoods = response.data.data[timestamp].meals;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    //------------------
   },
   methods: {
     // Vue.jsで使う関数はここで記述する
-    submit(foodId) {
+    submit(foodId, foodName, p, c, f, kcal) {
       const eated = document.getElementById(foodId + "eated").value;
       const timestamp = document.getElementById(foodId + "timestamp").value;
 
@@ -360,17 +310,68 @@ export default {
       );
       console.log(UnixTimestamp);
 
-      window.alert(
-        "料理ID : " +
-          foodId +
-          "\n" +
-          "食べた量(g) : " +
-          eated +
-          "\n" +
-          "食べた時間 : " +
-          UnixTimestamp +
-          "を記録"
-      );
+      //--POST--
+      const user_id = localStorage.getItem("userId");
+      const auth_token = localStorage.getItem("token");
+      const requestBody = {
+        logType: "meals",
+        clear: true,
+        userId: user_id,
+        timestamp: UnixTimestamp,
+        details: {
+          foods: [
+            {
+              name: foodName,
+              amount: eated,
+              nutritions: {
+                p: p,
+                kcal: kcal,
+                c: c,
+                f: f,
+              },
+            },
+          ],
+          id: foodId,
+        },
+      };
+      axios
+        .put(baseUrl + "/user/logs/meals", requestBody, {
+          headers: {
+            token: auth_token,
+          },
+        })
+        .then((response) => {
+          // 成功したときの処理はここに記述する
+          window.alert("記録しました。");
+          // でバック用
+          window.alert(
+            "料理名 : " +
+              foodName +
+              "\nID:" +
+              foodId +
+              "\n食べた量(g) : " +
+              eated +
+              "\n" +
+              "食べた時間 : " +
+              UnixTimestamp +
+              "\n栄養素\n" +
+              " p:" +
+              p +
+              " c:" +
+              c +
+              " f:" +
+              f +
+              "kcal" +
+              kcal +
+              "  を記録"
+          );
+          console.log(response);
+        })
+        .catch((err) => {
+          // レスポンスがエラーで返ってきたときの処理はここに記述する
+          console.log(err);
+        });
+      //--------
     },
   },
 };
