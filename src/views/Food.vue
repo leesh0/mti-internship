@@ -15,38 +15,21 @@
             <div class="ui card">
               <div class="content">
                 <h2 class="ui header">
-                  <div v-if="index === 0">
-                    朝食
-                  </div>
-                  <div v-if="index === 1">
-                    昼食
-                  </div>
-                  <div v-if="index === 2">
-                    夕食
-                  </div>
+                  <div>献立の提案 {{ index + 1 }}</div>
                   <div class="sub header">
                     <div class="ui middle aligned divided list">
-                      <div class="item">
+                      <div
+                        class="item"
+                        v-for="(datalist, index2) in suggestionData.details
+                          .foods"
+                        :key="index2"
+                      >
                         <div class="content">
-                          <!-- {{ suggestionData.details.foods.name }} -->
+                          {{ datalist.name }}
                         </div>
-                      </div>
-                      <div class="item">
                         <div class="right floated content">
-                          <!-- {{ suggestionData.details.foods[0].nutritions.kcal -->
+                          {{ datalist.nutritions.kcal
                           }}<span class="cardKcal"> Kcal</span>
-                        </div>
-                        <div class="content">
-                          <!-- {{ suggestionData.details.foods[0].name }} -->
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="right floated content">
-                          <!-- {{ suggestionData.details.foods[1].nutritions.kcal -->
-                          }}<span class="cardKcal"> Kcal</span>
-                        </div>
-                        <div class="content">
-                          <!-- {{ suggestionData.details.foods[1].name }} -->
                         </div>
                       </div>
                     </div>
