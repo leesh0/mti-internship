@@ -98,9 +98,14 @@
               </label>
             </div>
           </div>
-          <div class="ui red message" v-if="err">
+          <div class="ui red message" v-if="(!user.userId||!user.password||!user.nickName||!user.age||!user.weight||!user.height)&&err">
             <ul class="list">
-              <li v-if="err" class="err-msg">{{ err }}</li>
+              <li v-if="!user.userId" class="err-msg">userIdを入力してください</li>
+              <li v-if="!user.password" class="err-msg">パスワードを入力してください</li>
+              <li v-if="!user.nickName" class="err-msg">ニックネームを入力してください</li>
+              <li v-if="!user.age" class="err-msg">年齢を入力してください</li>
+              <li v-if="!user.weight" class="err-msg">体重を入力してください</li>
+              <li v-if="!user.height" class="err-msg">身長を入力してください</li>
             </ul>
           </div>
           <button class="ui huge green fluid button" type="submit">
