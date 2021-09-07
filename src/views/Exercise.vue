@@ -27,12 +27,13 @@
       </div>
       <div class="ui segment">
         <h2>おすすめの運動</h2>
-        <ul>
+        <ul v-for="(data, index) in doneExercise" :key="index">
           <li>
-            <h3>ウォーキング 10分</h3>
-          </li>
-          <li>
-            <h3>スクワット 20回</h3>
+            <h3>
+              {{ data.details.name }}{{ " "
+              }}{{ Math.floor(data.details.kcal * 100) / 100
+              }}<span class="kcal"> Kcal</span>
+            </h3>
           </li>
         </ul>
       </div>
@@ -62,6 +63,10 @@
                           >{{ n * 5 }} 分</option
                         >
                       </select>
+                    </div>
+                    <div class="selectTime">
+                      <label>行った時間</label>
+                      <input type="time" :id="e.name + 'timestamp'" />
                     </div>
                     <button
                       class="fluid ui green button"
@@ -97,7 +102,7 @@ export default {
     Footer,
   },
   data() {
-    return { data };
+    return { data, doneExercise: [] };
   },
   computed: {
     // 計算した結果を変数として利用したいときはここに記述する
@@ -138,13 +143,35 @@ export default {
       .catch(() => {
         // レスポンスがエラーで返ってきたときの処理はここに記述する
       });
+
+    //----------------------------------------------------------------------
+    const user_id = localStorage.getItem("userId");
+    const auth_token = localStorage.getItem("token");
+
+    axios
+      .get(baseUrl + "/user/logs/workout?userId=" + user_id, {
+        headers: {
+          token: auth_token,
+        },
+      })
+      .then((response) => {
+        // 成功したときの処理はここに記述する
+        console.log("運動データ");
+        console.log(response.data.data);
+        this.doneExercise = response.data.data;
+      })
+      .catch((err) => {
+        // レスポンスがエラーで返ってきたときの処理はここに記述する
+        // window.alert("Chart:\n" + err);
+        console.log(err);
+      });
   },
   methods: {
     // Vue.jsで使う関数はここで記述する
     // METs × 体重（kg × 時間 × 1.05 ＝ 消費カロリー（kcal
     submit(exerciseName, mets) {
       //const weight = document.getElementById(exerciseName).value;
-      const element = document.getElementById(exerciseName);
+      //const element = document.getElementById(exerciseName);
       const auth_token = localStorage.getItem("token");
       const user_id = localStorage.getItem("userId");
       axios
@@ -158,14 +185,58 @@ export default {
           console.log(response.data.data.weight);
 
           const kcal = mets * response.data.data.weight * 1.05;
-          window.alert(
-            "時間：" +
-              element.value +
-              "\nメッツ：" +
-              mets +
-              "\n消費カロリー；" +
-              kcal
+
+          const timestamp = document.getElementById(exerciseName + "timestamp")
+            .value;
+
+          //nullチェック
+          if (!timestamp) {
+            window.alert("行った時間が入力されていません。");
+            return;
+          }
+
+          const today = new Date();
+          const month = today.getMonth() + 1;
+          const date = today.getDate();
+          const UnixTimestamp = Date.parse(
+            `${today.getFullYear()}-${month
+              .toString()
+              .padStart(2, "0")}-${date
+              .toString()
+              .padStart(2, "0")} ${timestamp}:00`
           );
+          console.log(UnixTimestamp);
+
+          //--PUT---
+          const auth_token = localStorage.getItem("token");
+          const user_id = localStorage.getItem("userId");
+          const requestBody = {
+            userId: user_id,
+            logType: "workout",
+            clear: true,
+            timestamp: UnixTimestamp,
+            details: {
+              name: exerciseName,
+              kcal: kcal,
+            },
+          };
+          axios
+            .put(baseUrl + "/user/logs/workout", requestBody, {
+              headers: {
+                token: auth_token,
+              },
+            })
+            .then((response) => {
+              // 成功したときの処理はここに記述する
+              window.alert("記録しました。");
+              console.log(response);
+            })
+            .catch((err) => {
+              // レスポンスがエラーで返ってきたときの処理はここに記述する
+              //window.alert(err);
+              console.log(err);
+            });
+          //--------
         })
         .catch((err) => {
           // レスポンスがエラーで返ってきたときの処理はここに記述する
@@ -180,5 +251,8 @@ export default {
 .selectTime {
   margin-bottom: 5px;
   margin-top: 5px;
+}
+.kcal {
+  font-size: 80%;
 }
 </style>
