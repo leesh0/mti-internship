@@ -134,15 +134,15 @@ export default {
     // Vue.jsの読み込みが完了したときに実行する処理はここに記述する
     const token = localStorage.getItem("token");
     if (!token) this.$router.push({ name: "Login" });
-    axios
-      .get(baseUrl + "/users")
-      .then((response) => {
-        // 成功したときの処理はここに記述する
-        this.users = response.data.users;
-      })
-      .catch(() => {
-        // レスポンスがエラーで返ってきたときの処理はここに記述する
-      });
+    // axios
+    //   .get(baseUrl + "/users")
+    //   .then((response) => {
+    //     // 成功したときの処理はここに記述する
+    //     this.users = response.data.users;
+    //   })
+    //   .catch(() => {
+    //     // レスポンスがエラーで返ってきたときの処理はここに記述する
+    //   });
 
     //----------------------------------------------------------------------
     const user_id = localStorage.getItem("userId");
