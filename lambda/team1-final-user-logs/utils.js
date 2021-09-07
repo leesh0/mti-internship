@@ -115,8 +115,9 @@ async function checkMeals(mealList, reqUser) {
     let mealsKey = d.format('YY.MM.DD')
     let mealsStamp = d.valueOf()
     if (meals[mealsKey]) {
-      addRequire[mealsStamp] =
+      let dataN =
         3 - (meals[mealsKey].meals?.length ? meals[mealsKey].meals.length : 0)
+      addRequire[mealsStamp] = dataN < 0 ? 0 : dataN
     } else {
       addRequire[mealsStamp] = 3
     }
@@ -128,9 +129,21 @@ async function checkMeals(mealList, reqUser) {
       Team1UserLog: [],
     },
   }
+
+  console.log('ADDREQUIRE =>', addRequire)
   for (const key of Object.keys(addRequire)) {
     for (var i = 0; i < addRequire[key]; i++) {
-      console.log('A')
+      let mj = moment(parseInt(key))
+        .startOf('day')
+        .format('YY.MM.DD')
+      let ts
+      console.log(meals, 'MJ => ', addRequire)
+      if (addRequire[key] > 0 && meals[mj]) {
+        console.log(meals, 'MJ => ', mj)
+        ts = meals[mj].meals.slice(-1)[0].timestamp + 1
+      } else {
+        ts = parseInt(key) + i
+      }
       let mealData = mealsData[randInt(0, mealsData.length)]
       dParams.RequestItems.Team1UserLog.push({
         PutRequest: {
@@ -138,7 +151,7 @@ async function checkMeals(mealList, reqUser) {
             userId: reqUser,
             logType: 'meals',
             clear: false,
-            timestamp: parseInt(key) + i,
+            timestamp: ts,
             details: mealData,
           },
         },
