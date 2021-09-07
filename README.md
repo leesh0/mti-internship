@@ -1,6 +1,6 @@
 # サニタス
 
-### [サニタスアプリのサイト](http://team1-final-internship.s3-website-ap-northeast-1.amazonaws.com/food)
+### [サニタスアプリのサイト](http://team1-final-internship.s3-website-ap-northeast-1.amazonaws.com)
 
 ## Home ページ
 
